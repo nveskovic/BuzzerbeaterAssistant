@@ -24,7 +24,7 @@ public class DriverInitializationHelper {
         System.setProperty("webdriver.chrome.driver", driverPath);
         ChromeOptions chromeOptions = new ChromeOptions();
         if(!visibleBrowser){
-        	chromeOptions.addArguments("--headless");
+        	chromeOptions.addArguments("--headless"); // not visible == headless
         }
 
         driver = new ChromeDriver(chromeOptions);

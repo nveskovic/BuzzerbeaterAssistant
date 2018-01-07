@@ -46,7 +46,8 @@ public class AutobidStaffOnSaleWorker extends SwingWorker<Boolean, String> {
 	
 	public AutobidStaffOnSaleWorker(String username, String password,
 			String teamID, String staffID, int maxPrice, int secondsBetweenTryouts,
-			boolean useAuctionEnd, int minutesBeforeAuctionToStartMonitoring, JLabel lblAuctionEndsIn, JLabel lblStatus) {
+			boolean useAuctionEnd, int minutesBeforeAuctionToStartMonitoring, JLabel lblAuctionEndsIn, JLabel lblStatus,
+			boolean useVisibleBrowser) {
 		this.maxPrice = maxPrice;
 		this.sleepInSeconds = secondsBetweenTryouts;
 		this.staffID = staffID;
@@ -57,6 +58,7 @@ public class AutobidStaffOnSaleWorker extends SwingWorker<Boolean, String> {
 		this.numOfMinutesToStartMonitoringBeforeAuctionsEnds = minutesBeforeAuctionToStartMonitoring;
 		this.lblAuctionEndsIn = lblAuctionEndsIn;
 		this.lblStatus = lblStatus;
+		this.visibleBrowser = useVisibleBrowser;
 	}
 
 	public String getStatusMessage() {

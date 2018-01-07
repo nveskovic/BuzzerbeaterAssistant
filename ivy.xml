@@ -16,21 +16,13 @@
         <!-- Presentation purposes -->
 
              <!-- Browser binaries -->
-        <dependency org="mozilla" name="geckodriver-linux64" rev="0.18.0">
-            <artifact name="geckodriver-v0.18.0-linux64" ext="tar.gz" type="tar.gz"
-                    url="https://github.com/mozilla/geckodriver/releases/download/v0.18.0/geckodriver-v0.18.0-linux64.tar.gz"/>
+        <dependency org="chromedriver" name="chromedriver" rev="2.34">
+            <artifact name="chromedriver" ext="zip" type="zip"
+                    url="https://chromedriver.storage.googleapis.com/2.34/chromedriver_win32.zip"/>
         </dependency>
-        <dependency org="mozilla" name="geckodriver-win64" rev="0.18.0">
-            <artifact name="geckodriver-v0.18.0-win64" ext="zip" type="zip"
-                    url="https://github.com/mozilla/geckodriver/releases/download/v0.18.0/geckodriver-v0.18.0-win64.zip"/>
-        </dependency>
-        <dependency org="ariya" name="phantomjs" rev="2.1.1">
-            <artifact name="phantomjs" ext="tar.bz2" type="tar.bz2"
-                    url="https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2"/>
-        </dependency>
-        <dependency org="ariya" name="phantomjs" rev="2.1.1">
-            <artifact name="phantomjs" ext="zip" type="zip"
-                    url="https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-windows.zip"/>
+        <dependency org="chromedriver" name="chromedriver" rev="2.34">
+            <artifact name="chromedriver" ext="zip" type="zip"
+                    url="https://chromedriver.storage.googleapis.com/2.34/chromedriver_linux64.zip"/>
         </dependency>
 
     </dependencies>

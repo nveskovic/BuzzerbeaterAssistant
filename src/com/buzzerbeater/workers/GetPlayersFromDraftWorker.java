@@ -92,7 +92,6 @@ public class GetPlayersFromDraftWorker extends SwingWorker<Boolean, Integer> {
 					try {
 						String okMessageSuffix = "";
 						
-						String messageTemplate, subjectTemplate;
 						outputArea.append((i+1) + "/" + leagueIDs.size() + 
 								": Getting list of players from '" + url + "' ... ");
 						driver.get(url);

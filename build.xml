@@ -7,7 +7,7 @@
     -->
     <property name="src.dir" location="src"/>
     <property name="build.dir" location="build"/>
-	<property name="lib.dir" location="lib_new"/>
+	<property name="lib.dir" location="lib"/>
     <property name="classes.dir" location="${build.dir}/classes"/>
     <property name="ivy.reports.dir"  location="${build.dir}/ivy-reports"/>
 	<property name="resources.dir" location="resources"/>
@@ -44,39 +44,21 @@
 
 
 		<!-- extract browser binaries from tar archive -->
-		<unzip dest="${browser.binaries.folder}">
+    	<unzip dest="${browser.binaries.folder}">
 			<fileset dir="${lib.dir}">
-				<include name="geckodriver*.zip" />
+				<include name="chromedriver*linux*.zip" />
 			</fileset>
 			<patternset>
-				<include name="geckodriver.exe"/>
+				<include name="chromedriver"/>
 			</patternset>
 			<mapper type="flatten"/>
 		</unzip>
-		<untar dest="${browser.binaries.folder}" compression="gzip">
-			<fileset dir="${lib.dir}">
-				<include name="geckodriver*.tar.gz" />
-			</fileset>
-			<patternset>
-				<include name="geckodriver"/>
-			</patternset>
-			<mapper type="flatten"/>
-		</untar>
-		<untar dest="${browser.binaries.folder}" compression="bzip2">
-			<fileset dir="${lib.dir}">
-				<include name="phantomjs*.tar.bz2" />
-			</fileset>
-			<patternset>
-				<include name="phantomjs*/bin/phantomjs"/>
-			</patternset>
-			<mapper type="flatten"/>
-		</untar>
     	<unzip dest="${browser.binaries.folder}">
 			<fileset dir="${lib.dir}">
-				<include name="phantomjs*.zip" />
+				<include name="chromedriver*win*.zip" />
 			</fileset>
 			<patternset>
-				<include name="*/bin/phantomjs.exe"/>
+				<include name="chromedriver.exe"/>
 			</patternset>
 			<mapper type="flatten"/>
 		</unzip>

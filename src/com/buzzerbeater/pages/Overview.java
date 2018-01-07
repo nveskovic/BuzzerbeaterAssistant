@@ -3,7 +3,6 @@ package com.buzzerbeater.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-import com.buzzerbeater.utils.Sleeper;
 
 public class Overview extends Page{
 	

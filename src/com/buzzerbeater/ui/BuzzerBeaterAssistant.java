@@ -15,7 +15,6 @@ import javax.swing.SwingWorker;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.BadLocationException;
 
 import com.buzzerbeater.Version;
 import com.buzzerbeater.utils.Files;
@@ -40,7 +39,6 @@ import java.awt.Insets;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JCheckBox;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.awt.event.ItemListener;
@@ -50,18 +48,15 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 
 import javax.swing.JProgressBar;
 import javax.swing.JSplitPane;
 import javax.swing.JSeparator;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public final class BuzzerBeaterAssistant {
 
-	private static boolean visibleBrowser = false;
+	private boolean visibleBrowser = false;
 	private JFrame frmBbassistant;
 	private SendMessagesToOwners sendMessagesWorker;
 
@@ -88,6 +83,10 @@ public final class BuzzerBeaterAssistant {
 	private JTextField textFieldseason;
 	private JTextField textFieldSubjectLocalized;
 	private JTextField textFieldSubjectEnglish;
+	private JPasswordField passwordField;
+	private JTextField usernameField;
+	private JTextField teamIDField;
+	private JLabel lblActionresult;
 
 	public boolean isVisibleBrowser() {
 		return visibleBrowser;
@@ -141,7 +140,7 @@ public final class BuzzerBeaterAssistant {
 		lblUsername.setHorizontalAlignment(SwingConstants.LEFT);
 		userInfoTab.add(lblUsername);
 
-		JTextField usernameField = new JTextField();
+		usernameField = new JTextField();
 		lblUsername.setLabelFor(usernameField);
 		usernameField.setBounds(118, 8, 328, 29);
 		usernameField.setHorizontalAlignment(SwingConstants.LEFT);
@@ -153,12 +152,12 @@ public final class BuzzerBeaterAssistant {
 		lblPassword.setBounds(5, 42, 102, 16);
 		userInfoTab.add(lblPassword);
 
-		JPasswordField passwordField = new JPasswordField();
+		passwordField = new JPasswordField();
 		lblPassword.setLabelFor(passwordField);
 		passwordField.setBounds(118, 43, 328, 28);
 		userInfoTab.add(passwordField);
 
-		JTextField teamIDField = new JTextField();
+		teamIDField = new JTextField();
 		teamIDField.setBounds(118, 77, 328, 28);
 		userInfoTab.add(teamIDField);
 
@@ -168,7 +167,7 @@ public final class BuzzerBeaterAssistant {
 		lblTeamid.setBounds(5, 80, 102, 16);
 		userInfoTab.add(lblTeamid);
 
-		JLabel lblActionresult = new JLabel("");
+		lblActionresult = new JLabel("");
 		lblActionresult.setBounds(216, 168, 230, 25);
 		userInfoTab.add(lblActionresult);
 
@@ -467,32 +466,7 @@ public final class BuzzerBeaterAssistant {
 		btnLoad.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				File selFile = new File("data/userInfo.properties");
-
-				// create the list from usersInfo fields
-				List<String> userInfo = new ArrayList<String>();
-
-				try {
-					userInfo = Files.readLinesFromFile(selFile);
-					if(userInfo.size()!=3) {
-						lblActionresult.setForeground(Color.RED);
-						lblActionresult.setText("ERROR: Corrupted properties file" + System.getProperty("line.separator"));
-						return;
-					}
-
-					usernameField.setText(userInfo.get(0));
-					passwordField.setText(userInfo.get(1));
-					teamIDField.setText(userInfo.get(2));
-
-					lblActionresult.setForeground(Color.BLUE);
-					lblActionresult.setText("Info loaded!" + System.getProperty("line.separator"));
-
-					return;
-				} catch (Exception exc) {
-					lblActionresult.setForeground(Color.RED);
-					lblActionresult.setText("ERROR: Info not loaded!" + System.getProperty("line.separator"));
-					return;
-				}
+				loadUserInfo();
 			}
 		});
 		btnLoad.setBounds(107, 118, 97, 25);
@@ -1122,7 +1096,37 @@ public final class BuzzerBeaterAssistant {
 
 		// load app
 		BuzzerBeaterAssistant window = new BuzzerBeaterAssistant();
-		window.setVisibleBrowser(visibleBrowser);
+		window.setVisibleBrowser(false);
+		window.loadUserInfo();
 		window.setFrameVisible(true);
+	}
+	
+	private void loadUserInfo() {
+		File selFile = new File("data/userInfo.properties");
+
+		// create the list from usersInfo fields
+		List<String> userInfo = new ArrayList<String>();
+
+		try {
+			userInfo = Files.readLinesFromFile(selFile);
+			if(userInfo.size()!=3) {
+				lblActionresult.setForeground(Color.RED);
+				lblActionresult.setText("ERROR: Corrupted properties file" + System.getProperty("line.separator"));
+				return;
+			}
+
+			usernameField.setText(userInfo.get(0));
+			passwordField.setText(userInfo.get(1));
+			teamIDField.setText(userInfo.get(2));
+
+			lblActionresult.setForeground(Color.BLUE);
+			lblActionresult.setText("Info loaded!" + System.getProperty("line.separator"));
+
+			return;
+		} catch (Exception exc) {
+			lblActionresult.setForeground(Color.RED);
+			lblActionresult.setText("ERROR: Info not loaded!" + System.getProperty("line.separator"));
+			return;
+		}
 	}
 }

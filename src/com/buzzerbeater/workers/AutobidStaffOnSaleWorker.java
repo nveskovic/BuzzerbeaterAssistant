@@ -38,9 +38,6 @@ public class AutobidStaffOnSaleWorker extends SwingWorker<Boolean, String> {
 	private boolean sleepUntilAuctionEndsTime = false;
 	private int numOfMinutesToStartMonitoringBeforeAuctionsEnds;
 	private Date auctionEndsAt;
-	
-
-	private String errorMsg_NotEnoughMoney = "You don't have enough money to make that bid!";
 
 	private String statusMessage = "";
 

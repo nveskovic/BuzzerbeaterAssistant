@@ -24,3 +24,9 @@ hs_err_pid*
 # folders
 /jars
 /data/purchase_license
+/data/drivers
+/bin
+/build
+
+# output files
+/*.csv

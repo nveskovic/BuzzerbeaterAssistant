@@ -7,19 +7,13 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import javax.swing.text.DefaultCaret;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.MarionetteDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 
 import com.buzzerbeater.pages.*;
 import com.buzzerbeater.utils.DriverInitializationHelper;

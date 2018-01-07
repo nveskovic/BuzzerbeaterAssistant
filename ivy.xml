@@ -1,0 +1,29 @@
+<ivy-module version="2.0">
+    <info organisation="com.buzzerbeater" module="BuzzerBeater Assistant"/>
+
+    <configurations defaultconfmapping="compile->default">
+        <conf name="compile" description="Required to compile application"/>
+    </configurations>
+
+    <dependencies>
+        <!-- TODO: selenium-java has many jars downloaded as dependency that maybe
+            is not needed exclude them in some later stage -->
+        <dependency org="org.seleniumhq.selenium" name="selenium-java" rev="latest.integration"/>
+        <dependency org="org.seleniumhq.selenium" name="selenium-server" rev="latest.integration"/>
+        <dependency org="com.github.detro.ghostdriver" name="phantomjsdriver" rev="latest.integration"/>
+
+        <!-- Presentation purposes -->
+        <!-- Presentation purposes -->
+
+             <!-- Browser binaries -->
+        <dependency org="chromedriver" name="chromedriver" rev="2.34">
+            <artifact name="chromedriver" ext="zip" type="zip"
+                    url="https://chromedriver.storage.googleapis.com/2.34/chromedriver_win32.zip"/>
+        </dependency>
+        <dependency org="chromedriver" name="chromedriver" rev="2.34">
+            <artifact name="chromedriver" ext="zip" type="zip"
+                    url="https://chromedriver.storage.googleapis.com/2.34/chromedriver_linux64.zip"/>
+        </dependency>
+
+    </dependencies>
+</ivy-module>

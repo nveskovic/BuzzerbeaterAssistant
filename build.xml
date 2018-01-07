@@ -1,0 +1,133 @@
+<project name="Buzzerbeater Assistant" default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+    <!--
+    ================
+    Build properties
+    ================
+    -->
+    <property name="src.dir" location="src"/>
+    <property name="build.dir" location="build"/>
+	<property name="lib.dir" location="lib_new"/>
+    <property name="classes.dir" location="${build.dir}/classes"/>
+    <property name="ivy.reports.dir"  location="${build.dir}/ivy-reports"/>
+	<property name="resources.dir" location="resources"/>
+	<property name="config.dir" location="${resources.dir}/config"/>
+	<property name="data.dir" location="data"/>
+	<property name="browser.binaries.folder" location="${data.dir}/drivers"/>
+
+    <!--
+    ===========
+    Build setup
+    ===========
+    -->
+    <target name="init">
+    	
+    	<path id="lib.classpath">
+    		<fileset  dir="${lib.dir}" includes="**/*.jar"/>
+    	</path>
+    	<path id="project.classpath">
+    		<path refid="lib.classpath"/>
+    		<fileset dir="${classes.dir}" includes="**/*.class"/>
+    		<dirset dir="${classes.dir}"/>
+    		<dirset dir="${resources.dir}"/>
+    	</path>
+    	
+    	<ivy:settings file="${config.dir}/ivysettings.xml"/>
+        <ivy:resolve/>
+    	<mkdir dir="${lib.dir}"/>
+		<mkdir dir="${browser.binaries.folder}"/>
+    	<ivy:retrieve pattern="${lib.dir}/[artifact].[ext]"/>
+
+        <ivy:report todir='${ivy.reports.dir}' graph='false' xml='false'/>
+
+        <ivy:cachepath pathid="compile.path" conf="compile"/>
+
+
+		<!-- extract browser binaries from tar archive -->
+		<unzip dest="${browser.binaries.folder}">
+			<fileset dir="${lib.dir}">
+				<include name="geckodriver*.zip" />
+			</fileset>
+			<patternset>
+				<include name="geckodriver.exe"/>
+			</patternset>
+			<mapper type="flatten"/>
+		</unzip>
+		<untar dest="${browser.binaries.folder}" compression="gzip">
+			<fileset dir="${lib.dir}">
+				<include name="geckodriver*.tar.gz" />
+			</fileset>
+			<patternset>
+				<include name="geckodriver"/>
+			</patternset>
+			<mapper type="flatten"/>
+		</untar>
+		<untar dest="${browser.binaries.folder}" compression="bzip2">
+			<fileset dir="${lib.dir}">
+				<include name="phantomjs*.tar.bz2" />
+			</fileset>
+			<patternset>
+				<include name="phantomjs*/bin/phantomjs"/>
+			</patternset>
+			<mapper type="flatten"/>
+		</untar>
+    	<unzip dest="${browser.binaries.folder}">
+			<fileset dir="${lib.dir}">
+				<include name="phantomjs*.zip" />
+			</fileset>
+			<patternset>
+				<include name="*/bin/phantomjs.exe"/>
+			</patternset>
+			<mapper type="flatten"/>
+		</unzip>
+
+		<chmod dir="${browser.binaries.folder}" perm="ugo+x" includes="*"/>
+
+    	<!-- delete dowloaded (not needed) archives -->
+    	<delete>
+    		<fileset dir="${lib.dir}" includes ="*.zip" />
+			<fileset dir="${lib.dir}" includes ="*.tar.gz" />
+			<fileset dir="${lib.dir}" includes ="*.tar.bz2" />
+    	</delete>
+    </target>
+
+    <!--
+    ===============
+    Compile targets
+    ===============
+    -->
+    <target name="compile" depends="init">
+        <mkdir dir="${classes.dir}"/>
+    	<javac 
+        	srcdir="${src.dir}" 
+        	destdir="${classes.dir}" 
+        	includeantruntime="false" 
+        	debug="true" 
+    		classpathref="project.classpath"
+        	>
+        </javac>
+    </target>
+
+    <!--
+    =====================
+    Build and run targets
+    =====================
+    -->
+    <target name="build" depends="compile"/>
+
+    <!--
+    =============
+    Clean targets
+    =============
+    -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    	<delete dir="${lib.dir}"/>
+    	<delete dir="${classes.dir}"/>
+    	<delete dir="${browser.binaries.folder}"/>
+    </target>
+
+    <target name="clean-all" depends="clean">
+        <ivy:cleancache/>
+    </target>
+</project>

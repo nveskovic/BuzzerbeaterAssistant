@@ -4,19 +4,15 @@ import java.awt.Color;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.JLabel;
 import javax.swing.SwingWorker;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import com.buzzerbeater.pages.Login;
 import com.buzzerbeater.pages.Overview;
-import com.buzzerbeater.pages.Player;
 import com.buzzerbeater.pages.Staff;
 import com.buzzerbeater.utils.DateTimeHelper;
 import com.buzzerbeater.utils.DriverInitializationHelper;

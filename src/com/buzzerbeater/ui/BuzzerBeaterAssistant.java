@@ -87,6 +87,7 @@ public final class BuzzerBeaterAssistant {
 	private JTextField usernameField;
 	private JTextField teamIDField;
 	private JLabel lblActionresult;
+	private JCheckBox chckbxUseVisibleBrowser;
 
 	public boolean isVisibleBrowser() {
 		return visibleBrowser;
@@ -336,7 +337,7 @@ public final class BuzzerBeaterAssistant {
 							messagesMap, 
 							txtLogOutput,
 							chckbxSkipTLPlayers.isSelected(), //skipTLPlayers
-							false); //visible browser
+							chckbxUseVisibleBrowser.isSelected()); //visible browser
 
 					sendMessagesWorker.addPropertyChangeListener(
 							new PropertyChangeListener() {
@@ -446,6 +447,8 @@ public final class BuzzerBeaterAssistant {
 				userInfo.add(usernameField.getText());
 				userInfo.add(new String(passwordField.getPassword()));
 				userInfo.add(teamIDField.getText());
+				userInfo.add(chckbxUseVisibleBrowser.isSelected() ? "true" : "false");
+					
 
 				try {
 					Files.saveLinesToFile(userInfo, selFile);
@@ -459,7 +462,7 @@ public final class BuzzerBeaterAssistant {
 				}
 			}
 		});
-		btnSave.setBounds(5, 118, 97, 25);
+		btnSave.setBounds(5, 143, 97, 25);
 		userInfoTab.add(btnSave);
 
 		JButton btnLoad = new JButton("Load");
@@ -469,10 +472,19 @@ public final class BuzzerBeaterAssistant {
 				loadUserInfo();
 			}
 		});
-		btnLoad.setBounds(107, 118, 97, 25);
+		btnLoad.setBounds(107, 143, 97, 25);
 		userInfoTab.add(btnLoad);
 
 		tabbedPane.setSelectedComponent(userInfoTab);
+		
+		JLabel useVisibleBrowserLbl = new JLabel("Visible browser");
+		useVisibleBrowserLbl.setHorizontalAlignment(SwingConstants.LEFT);
+		useVisibleBrowserLbl.setBounds(5, 115, 102, 16);
+		userInfoTab.add(useVisibleBrowserLbl);
+		
+		chckbxUseVisibleBrowser = new JCheckBox("");
+		chckbxUseVisibleBrowser.setBounds(118, 113, 23, 18);
+		userInfoTab.add(chckbxUseVisibleBrowser);
 
 		JPanel tradingAgentTab = new JPanel();
 		tabbedPane.addTab("TradingAgent", null, tradingAgentTab, null);
@@ -530,7 +542,8 @@ public final class BuzzerBeaterAssistant {
 								txtPlayerID1.getText(), 
 								Integer.parseInt(txtMaxPrice1.getText()), 
 								lblAuctionEndsIn1,
-								lblAgentStatus1);
+								lblAgentStatus1,
+								chckbxUseVisibleBrowser.isSelected());
 
 						autobidWorkers[0].addPropertyChangeListener(
 								new PropertyChangeListener() {
@@ -597,7 +610,8 @@ public final class BuzzerBeaterAssistant {
 								txtPlayerID2.getText(), 
 								Integer.parseInt(txtMaxPrice2.getText()), 
 								lblAuctionEndsIn2,
-								lblAgentStatus2);
+								lblAgentStatus2,
+								chckbxUseVisibleBrowser.isSelected());
 
 						autobidWorkers[1].addPropertyChangeListener(
 								new PropertyChangeListener() {
@@ -680,7 +694,8 @@ public final class BuzzerBeaterAssistant {
 								true, 
 								15,
 								lblStaffAuctionEndsIn1,
-								lblStaffAgentStatus1);
+								lblStaffAgentStatus1,
+								chckbxUseVisibleBrowser.isSelected());
 
 						autobidStaffWorkers[0].addPropertyChangeListener(
 								new PropertyChangeListener() {
@@ -836,7 +851,7 @@ public final class BuzzerBeaterAssistant {
 						chckbxInviteToNt.isSelected(),
 						new File(textFieldOutputFile.getText()), 
 						textAreaLog, 
-						visibleBrowser);
+						chckbxUseVisibleBrowser.isSelected());
 
 				scoutPlayersWorker.addPropertyChangeListener(
 						new PropertyChangeListener() {
@@ -976,7 +991,7 @@ public final class BuzzerBeaterAssistant {
 						Integer.parseInt(textFieldseason.getText()), 
 						new File(textFieldOutputFileDraftSummary.getText()),
 						textAreaLog, 
-						false);
+						chckbxUseVisibleBrowser.isSelected());
 
 				getPlayersFromDraftWorker.addPropertyChangeListener(
 						new PropertyChangeListener() {
@@ -1109,7 +1124,7 @@ public final class BuzzerBeaterAssistant {
 
 		try {
 			userInfo = Files.readLinesFromFile(selFile);
-			if(userInfo.size()!=3) {
+			if(userInfo.size() < 3 || userInfo.size() > 4) {
 				lblActionresult.setForeground(Color.RED);
 				lblActionresult.setText("ERROR: Corrupted properties file" + System.getProperty("line.separator"));
 				return;
@@ -1118,6 +1133,11 @@ public final class BuzzerBeaterAssistant {
 			usernameField.setText(userInfo.get(0));
 			passwordField.setText(userInfo.get(1));
 			teamIDField.setText(userInfo.get(2));
+			
+			if(userInfo.size() == 4 && userInfo.get(3).toLowerCase().trim().equals("true"))
+				chckbxUseVisibleBrowser.setSelected(true);
+			else
+				chckbxUseVisibleBrowser.setSelected(false);
 
 			lblActionresult.setForeground(Color.BLUE);
 			lblActionresult.setText("Info loaded!" + System.getProperty("line.separator"));

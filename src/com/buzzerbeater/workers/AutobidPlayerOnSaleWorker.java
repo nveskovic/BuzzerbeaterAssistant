@@ -39,7 +39,8 @@ public class AutobidPlayerOnSaleWorker extends SwingWorker<Boolean, String> {
 	WebDriver driver = null;
 	
 	public AutobidPlayerOnSaleWorker(String username, String password,
-			String teamID, String playerID, int maxPrice, JLabel lblAuctionEndsIn, JLabel lblStatus) {
+			String teamID, String playerID, int maxPrice, JLabel lblAuctionEndsIn, JLabel lblStatus,
+			boolean useVisibleBrowser) {
 		this.maxPrice = maxPrice;
 		this.playerID = playerID;
 		this.username = username;
@@ -47,6 +48,7 @@ public class AutobidPlayerOnSaleWorker extends SwingWorker<Boolean, String> {
 		this.teamID = teamID;
 		this.lblAuctionEndsIn = lblAuctionEndsIn;
 		this.lblStatus = lblStatus;
+		this.visibleBrowser = useVisibleBrowser;
 	}
 
 	public String getStatusMessage() {

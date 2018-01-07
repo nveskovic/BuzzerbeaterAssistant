@@ -143,7 +143,7 @@ public final class BuzzerBeaterAssistant {
 
 		usernameField = new JTextField();
 		lblUsername.setLabelFor(usernameField);
-		usernameField.setBounds(118, 8, 328, 29);
+		usernameField.setBounds(118, 8, 405, 29);
 		usernameField.setHorizontalAlignment(SwingConstants.LEFT);
 		userInfoTab.add(usernameField);
 		usernameField.setColumns(10);
@@ -155,11 +155,11 @@ public final class BuzzerBeaterAssistant {
 
 		passwordField = new JPasswordField();
 		lblPassword.setLabelFor(passwordField);
-		passwordField.setBounds(118, 43, 328, 28);
+		passwordField.setBounds(118, 43, 405, 28);
 		userInfoTab.add(passwordField);
 
 		teamIDField = new JTextField();
-		teamIDField.setBounds(118, 77, 328, 28);
+		teamIDField.setBounds(118, 77, 405, 28);
 		userInfoTab.add(teamIDField);
 
 		JLabel lblTeamid = new JLabel("TeamID");
@@ -482,8 +482,8 @@ public final class BuzzerBeaterAssistant {
 		useVisibleBrowserLbl.setBounds(5, 115, 102, 16);
 		userInfoTab.add(useVisibleBrowserLbl);
 		
-		chckbxUseVisibleBrowser = new JCheckBox("");
-		chckbxUseVisibleBrowser.setBounds(118, 113, 23, 18);
+		chckbxUseVisibleBrowser = new JCheckBox("(if checked browser will be visible but app will run 3-4 times slower)");
+		chckbxUseVisibleBrowser.setBounds(118, 113, 405, 18);
 		userInfoTab.add(chckbxUseVisibleBrowser);
 
 		JPanel tradingAgentTab = new JPanel();

@@ -14,6 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.buzzerbeater.pages.Login;
 import com.buzzerbeater.pages.Overview;
 import com.buzzerbeater.pages.Staff;
+import com.buzzerbeater.utils.BrowserType;
 import com.buzzerbeater.utils.DateTimeHelper;
 import com.buzzerbeater.utils.DriverInitializationHelper;
 import com.buzzerbeater.utils.Sleeper;
@@ -43,11 +44,13 @@ public class AutobidStaffOnSaleWorker extends SwingWorker<Boolean, String> {
 
 	private JLabel lblAuctionEndsIn, lblStatus;
 	WebDriver driver = null;
+
+	private BrowserType browserType;
 	
 	public AutobidStaffOnSaleWorker(String username, String password,
 			String teamID, String staffID, int maxPrice, int secondsBetweenTryouts,
 			boolean useAuctionEnd, int minutesBeforeAuctionToStartMonitoring, JLabel lblAuctionEndsIn, JLabel lblStatus,
-			boolean useVisibleBrowser) {
+			boolean useVisibleBrowser, BrowserType browserType) {
 		this.maxPrice = maxPrice;
 		this.sleepInSeconds = secondsBetweenTryouts;
 		this.staffID = staffID;
@@ -59,6 +62,7 @@ public class AutobidStaffOnSaleWorker extends SwingWorker<Boolean, String> {
 		this.lblAuctionEndsIn = lblAuctionEndsIn;
 		this.lblStatus = lblStatus;
 		this.visibleBrowser = useVisibleBrowser;
+		this.browserType = browserType;
 	}
 
 	public String getStatusMessage() {
@@ -77,7 +81,7 @@ public class AutobidStaffOnSaleWorker extends SwingWorker<Boolean, String> {
 		lblAuctionEndsIn.setText("N/A");
 		
 		driver = DriverInitializationHelper
-				.initializeDriver(visibleBrowser);
+				.initializeDriver(visibleBrowser, browserType);
 		
 		try { 
 			Login loginPage = PageFactory.initElements(driver, Login.class);

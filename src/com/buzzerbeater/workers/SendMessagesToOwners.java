@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import com.buzzerbeater.pages.*;
+import com.buzzerbeater.utils.BrowserType;
 import com.buzzerbeater.utils.DriverInitializationHelper;
 import com.buzzerbeater.utils.Messages;
 
@@ -28,10 +29,12 @@ public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 	String teamID;
 	
 	List<String> playersWithMessagesSent, playersWithMessagesNotSent, playersFromRetiredAndBot;
+	private BrowserType browserType;
 	
 	public SendMessagesToOwners(String username, String password, String teamID,
 			List<String> players, HashMap<String, String> messagesMap,
-			JTextArea output, boolean skipTLPlayers, boolean visibleBrowser) {
+			JTextArea output, boolean skipTLPlayers, 
+			boolean visibleBrowser, BrowserType browserType) {
 		
 		this.playersURLs=players;
 		this.messagesAndSubjects = messagesMap;
@@ -41,6 +44,7 @@ public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 		this.teamID = teamID;
 		this.visibleBrowser = visibleBrowser;
 		this.skipTLPlayers = skipTLPlayers;
+		this.browserType = browserType;
 		
 		// initialize output lists
 		this.playersWithMessagesNotSent = new ArrayList<String>();
@@ -57,7 +61,7 @@ public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 		}
 		
 		WebDriver driver = DriverInitializationHelper
-				.initializeDriver(visibleBrowser);
+				.initializeDriver(visibleBrowser, browserType);
 		
 		this.outputArea.setText("Trying to send messages for " + playersURLs.size() 
 					+ " player(s)" + System.getProperty("line.separator"));

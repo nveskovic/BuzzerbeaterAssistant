@@ -62,13 +62,27 @@
 			</patternset>
 			<mapper type="flatten"/>
 		</unzip>
+		<unzip dest="${browser.binaries.folder}">
+			<fileset dir="${lib.dir}">
+				<include name="geckodriver*win*.zip" />
+			</fileset>
+			<patternset>
+				<include name="geckodriver.exe"/>
+			</patternset>
+			<mapper type="flatten"/>
+		</unzip>
+    	<gunzip dest="${browser.binaries.folder}/geckodriver">
+    		<fileset dir="${lib.dir}">
+				<include name="geckodriver*linux*.gz" />
+			</fileset>
+    	</gunzip >
 
 		<chmod dir="${browser.binaries.folder}" perm="ugo+x" includes="*"/>
 
     	<!-- delete dowloaded (not needed) archives -->
     	<delete>
     		<fileset dir="${lib.dir}" includes ="*.zip" />
-			<fileset dir="${lib.dir}" includes ="*.tar.gz" />
+			<fileset dir="${lib.dir}" includes ="*.gz" />
 			<fileset dir="${lib.dir}" includes ="*.tar.bz2" />
     	</delete>
     </target>

@@ -33,7 +33,6 @@
 	<classpathentry kind="lib" path="lib/jetty-xml.jar"/>
 	<classpathentry kind="lib" path="lib/jsr305.jar"/>
 	<classpathentry kind="lib" path="lib/neko-htmlunit.jar"/>
-	<classpathentry kind="lib" path="lib/phantomjsdriver.jar"/>
 	<classpathentry kind="lib" path="lib/sac.jar"/>
 	<classpathentry kind="lib" path="lib/selenium-api.jar"/>
 	<classpathentry kind="lib" path="lib/selenium-chrome-driver.jar"/>

@@ -17,6 +17,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.buzzerbeater.Version;
+import com.buzzerbeater.utils.BrowserType;
 import com.buzzerbeater.utils.Files;
 import com.buzzerbeater.utils.Messages;
 import com.buzzerbeater.utils.SwingUIHelper;
@@ -88,6 +89,8 @@ public final class BuzzerBeaterAssistant {
 	private JTextField teamIDField;
 	private JLabel lblActionresult;
 	private JCheckBox chckbxUseVisibleBrowser;
+	private JLabel lblBrowser;
+	private JComboBox<BrowserType> comboBoxBrowser;
 
 	public boolean isVisibleBrowser() {
 		return visibleBrowser;
@@ -337,7 +340,9 @@ public final class BuzzerBeaterAssistant {
 							messagesMap, 
 							txtLogOutput,
 							chckbxSkipTLPlayers.isSelected(), //skipTLPlayers
-							chckbxUseVisibleBrowser.isSelected()); //visible browser
+							chckbxUseVisibleBrowser.isSelected(), //visible browser
+							BrowserType.valueOf(comboBoxBrowser.getSelectedItem().toString()) // browser type
+							);
 
 					sendMessagesWorker.addPropertyChangeListener(
 							new PropertyChangeListener() {
@@ -447,6 +452,7 @@ public final class BuzzerBeaterAssistant {
 				userInfo.add(usernameField.getText());
 				userInfo.add(new String(passwordField.getPassword()));
 				userInfo.add(teamIDField.getText());
+				userInfo.add(comboBoxBrowser.getSelectedItem().toString());
 				userInfo.add(chckbxUseVisibleBrowser.isSelected() ? "true" : "false");
 					
 
@@ -462,7 +468,7 @@ public final class BuzzerBeaterAssistant {
 				}
 			}
 		});
-		btnSave.setBounds(5, 143, 97, 25);
+		btnSave.setBounds(5, 178, 97, 25);
 		userInfoTab.add(btnSave);
 
 		JButton btnLoad = new JButton("Load");
@@ -472,19 +478,32 @@ public final class BuzzerBeaterAssistant {
 				loadUserInfo();
 			}
 		});
-		btnLoad.setBounds(107, 143, 97, 25);
+		btnLoad.setBounds(107, 178, 97, 25);
 		userInfoTab.add(btnLoad);
 
 		tabbedPane.setSelectedComponent(userInfoTab);
 		
 		JLabel useVisibleBrowserLbl = new JLabel("Visible browser");
 		useVisibleBrowserLbl.setHorizontalAlignment(SwingConstants.LEFT);
-		useVisibleBrowserLbl.setBounds(5, 115, 102, 16);
+		useVisibleBrowserLbl.setBounds(5, 150, 102, 16);
 		userInfoTab.add(useVisibleBrowserLbl);
 		
 		chckbxUseVisibleBrowser = new JCheckBox("(if checked browser will be visible but app will run 3-4 times slower)");
-		chckbxUseVisibleBrowser.setBounds(118, 113, 405, 18);
+		chckbxUseVisibleBrowser.setBounds(118, 148, 405, 18);
 		userInfoTab.add(chckbxUseVisibleBrowser);
+		
+		lblBrowser = new JLabel("Browser");
+		lblBrowser.setHorizontalAlignment(SwingConstants.LEFT);
+		lblBrowser.setBounds(5, 118, 102, 16);
+		userInfoTab.add(lblBrowser);
+		
+		comboBoxBrowser = new JComboBox<BrowserType>();
+		comboBoxBrowser.setEditable(true);
+		for(BrowserType bt : BrowserType.values()) {
+			comboBoxBrowser.addItem(bt);
+		}
+		comboBoxBrowser.setBounds(118, 113, 142, 26);
+		userInfoTab.add(comboBoxBrowser);
 
 		JPanel tradingAgentTab = new JPanel();
 		tabbedPane.addTab("TradingAgent", null, tradingAgentTab, null);
@@ -543,7 +562,9 @@ public final class BuzzerBeaterAssistant {
 								Integer.parseInt(txtMaxPrice1.getText()), 
 								lblAuctionEndsIn1,
 								lblAgentStatus1,
-								chckbxUseVisibleBrowser.isSelected());
+								chckbxUseVisibleBrowser.isSelected(),
+								BrowserType.valueOf(comboBoxBrowser.getSelectedItem().toString()) // browser type
+								);
 
 						autobidWorkers[0].addPropertyChangeListener(
 								new PropertyChangeListener() {
@@ -611,7 +632,9 @@ public final class BuzzerBeaterAssistant {
 								Integer.parseInt(txtMaxPrice2.getText()), 
 								lblAuctionEndsIn2,
 								lblAgentStatus2,
-								chckbxUseVisibleBrowser.isSelected());
+								chckbxUseVisibleBrowser.isSelected(),
+								BrowserType.valueOf(comboBoxBrowser.getSelectedItem().toString()) // browser type
+								);
 
 						autobidWorkers[1].addPropertyChangeListener(
 								new PropertyChangeListener() {
@@ -695,7 +718,9 @@ public final class BuzzerBeaterAssistant {
 								15,
 								lblStaffAuctionEndsIn1,
 								lblStaffAgentStatus1,
-								chckbxUseVisibleBrowser.isSelected());
+								chckbxUseVisibleBrowser.isSelected(),
+								BrowserType.valueOf(comboBoxBrowser.getSelectedItem().toString()) // browser type
+								);
 
 						autobidStaffWorkers[0].addPropertyChangeListener(
 								new PropertyChangeListener() {
@@ -851,7 +876,9 @@ public final class BuzzerBeaterAssistant {
 						chckbxInviteToNt.isSelected(),
 						new File(textFieldOutputFile.getText()), 
 						textAreaLog, 
-						chckbxUseVisibleBrowser.isSelected());
+						chckbxUseVisibleBrowser.isSelected(),
+						BrowserType.valueOf(comboBoxBrowser.getSelectedItem().toString()) // browser type
+						);
 
 				scoutPlayersWorker.addPropertyChangeListener(
 						new PropertyChangeListener() {
@@ -991,7 +1018,9 @@ public final class BuzzerBeaterAssistant {
 						Integer.parseInt(textFieldseason.getText()), 
 						new File(textFieldOutputFileDraftSummary.getText()),
 						textAreaLog, 
-						chckbxUseVisibleBrowser.isSelected());
+						chckbxUseVisibleBrowser.isSelected(),
+						BrowserType.valueOf(comboBoxBrowser.getSelectedItem().toString()) // browser type
+						);
 
 				getPlayersFromDraftWorker.addPropertyChangeListener(
 						new PropertyChangeListener() {
@@ -1124,7 +1153,7 @@ public final class BuzzerBeaterAssistant {
 
 		try {
 			userInfo = Files.readLinesFromFile(selFile);
-			if(userInfo.size() < 3 || userInfo.size() > 4) {
+			if(userInfo.size() < 4 || userInfo.size() > 5) {
 				lblActionresult.setForeground(Color.RED);
 				lblActionresult.setText("ERROR: Corrupted properties file" + System.getProperty("line.separator"));
 				return;
@@ -1133,8 +1162,9 @@ public final class BuzzerBeaterAssistant {
 			usernameField.setText(userInfo.get(0));
 			passwordField.setText(userInfo.get(1));
 			teamIDField.setText(userInfo.get(2));
+			comboBoxBrowser.setSelectedItem(BrowserType.valueOf(userInfo.get(3)));
 			
-			if(userInfo.size() == 4 && userInfo.get(3).toLowerCase().trim().equals("true"))
+			if(userInfo.size() == 5 && userInfo.get(4).toLowerCase().trim().equals("true"))
 				chckbxUseVisibleBrowser.setSelected(true);
 			else
 				chckbxUseVisibleBrowser.setSelected(false);

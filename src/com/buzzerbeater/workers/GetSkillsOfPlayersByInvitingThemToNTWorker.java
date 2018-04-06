@@ -16,6 +16,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import com.buzzerbeater.pages.*;
+import com.buzzerbeater.utils.BrowserType;
 import com.buzzerbeater.utils.DriverInitializationHelper;
 import com.buzzerbeater.utils.Files;
 
@@ -33,10 +34,11 @@ public class GetSkillsOfPlayersByInvitingThemToNTWorker extends SwingWorker<Bool
 	String username;
 	String password;
 	String teamID;
+	private BrowserType browserType;
 	
 	public GetSkillsOfPlayersByInvitingThemToNTWorker(String username, String password, String teamID,
 			List<String> players, int minPotential, boolean skipBotAndRetired, boolean inviteToNT,
-			File outputCSV, JTextArea outputArea, boolean visibleBrowser) {
+			File outputCSV, JTextArea outputArea, boolean visibleBrowser, BrowserType browserType) {
 		
 		this.playersURLs=players;
 		this.minPotential = minPotential;
@@ -48,6 +50,7 @@ public class GetSkillsOfPlayersByInvitingThemToNTWorker extends SwingWorker<Bool
 		this.outputArea = outputArea;
 		this.skipBotAndRetired = skipBotAndRetired;
 		this.inviteToNT = inviteToNT;
+		this.browserType =  browserType;
 		
 		if(autosccrollLogArea) {
 			DefaultCaret caret = (DefaultCaret) outputArea.getCaret();
@@ -82,7 +85,7 @@ public class GetSkillsOfPlayersByInvitingThemToNTWorker extends SwingWorker<Bool
 
 		while(i<playersURLs.size()) {
 			WebDriver driver = DriverInitializationHelper
-					.initializeDriver(visibleBrowser, true);
+					.initializeDriver(visibleBrowser, true, browserType);
 			
 			try {
 				driver.get(playersURLs.get(i));

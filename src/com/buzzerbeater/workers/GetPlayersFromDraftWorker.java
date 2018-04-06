@@ -15,6 +15,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import com.buzzerbeater.pages.*;
+import com.buzzerbeater.utils.BrowserType;
 import com.buzzerbeater.utils.DriverInitializationHelper;
 import com.buzzerbeater.utils.Files;
 
@@ -30,9 +31,11 @@ public class GetPlayersFromDraftWorker extends SwingWorker<Boolean, Integer> {
 	String username;
 	String password;
 	String teamID;
+	private BrowserType browserType;
 	
 	public GetPlayersFromDraftWorker(String username, String password, String teamID,
-			List<String> leagues, int season, File outputFile, JTextArea outputArea, boolean visibleBrowser) {
+			List<String> leagues, int season, File outputFile, JTextArea outputArea, 
+			boolean visibleBrowser, BrowserType browserType) {
 		
 		this.leagueIDs=leagues;
 		this.username=username;
@@ -41,6 +44,7 @@ public class GetPlayersFromDraftWorker extends SwingWorker<Boolean, Integer> {
 		this.visibleBrowser = visibleBrowser;
 		this.outputFile = outputFile;
 		this.outputArea = outputArea;
+		this.browserType = browserType;
 		
 		if(autosccrollLogArea) {
 			DefaultCaret caret = (DefaultCaret) outputArea.getCaret();
@@ -75,7 +79,7 @@ public class GetPlayersFromDraftWorker extends SwingWorker<Boolean, Integer> {
 
 		while(i<leagueIDs.size()) {
 			WebDriver driver = DriverInitializationHelper
-					.initializeDriver(visibleBrowser);
+					.initializeDriver(visibleBrowser, browserType);
 			
 			try {
 				

@@ -78,13 +78,6 @@ public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 				}
 			}
 			
-			// authenticate team
-			if(!this.teamID.equals(overviewPage.getTeamID())) {
-				outputArea.setForeground(Color.RED);
-				outputArea.setText("ERROR: your team is not licenesed to use this tool!");
-				return false;
-			}
-			
 			// go to manage my team to get the country id
 			driver.get(overviewPage.url);
 			overviewPage = PageFactory.initElements(driver, Overview.class);

@@ -206,7 +206,9 @@ public final class BuzzerBeaterAssistant {
 		txtMessageDomestic.setFont(new Font("Courier New", Font.PLAIN, 12));
 		txtMessageDomestic.setTabSize(4);
 		txtMessageDomestic.setWrapStyleWord(true);
-		txtMessageDomestic.setToolTipText("Type " + Messages.playerNamePlaceholder + " to have player name set in the message");
+		String tooltip = "Type " + Messages.playerNamePlaceholder + " to have player name set in the message.\r\n" +
+				"Type  " + Messages.playerIDPlaceholder + " to have player ID set in the message.";
+		txtMessageDomestic.setToolTipText(tooltip);
 		txtMessageDomestic.setBounds(376, 75, 449, 191);
 		ntScoutTab.add(txtMessageDomestic);		
 
@@ -225,7 +227,7 @@ public final class BuzzerBeaterAssistant {
 		JTextArea txtMessageEN = new JTextArea();
 		lblEnglishMessage.setLabelFor(txtMessageEN);
 		txtMessageEN.setWrapStyleWord(true);
-		txtMessageEN.setToolTipText("Type " + Messages.playerNamePlaceholder + " to have player name set in the message");
+		txtMessageEN.setToolTipText(tooltip);
 		txtMessageEN.setText(Messages.getCustomMap().get(Messages.MESSAGE_ENGLISH_KEY));
 		txtMessageEN.setTabSize(4);
 		txtMessageEN.setLineWrap(true);

@@ -14,12 +14,20 @@ public class Team extends Page{
 
 	@FindBy(xpath = "//*[@id='teammenu']//img[contains(@src, 'sendmail')]")
 	WebElement sendMessageIcon;
+
+	@FindBy(id = "cphContent_SubMenu_Label3")
+	WebElement sendMessageLink;
 	
-	@FindBy(id = "ctl00_cphContent_ltlCountryName")
+	@FindBy(id = "cphContent_ltlCountryName")
 	WebElement countryLink;
 	
 	public SendMessage clickOnSendMessageIcon() {
 		sendMessageIcon.click();
+		return PageFactory.initElements(driver, SendMessage.class);
+	}
+
+	public SendMessage clickOnSendMessageLink() {
+		sendMessageLink.click();
 		return PageFactory.initElements(driver, SendMessage.class);
 	}
 	

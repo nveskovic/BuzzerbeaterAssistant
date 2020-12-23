@@ -18,7 +18,7 @@ public class DriverInitializationHelper {
 		 * Due to problem described here https://github.com/SeleniumHQ/selenium/issues/5453
 		 * Setting http.factory to apache
 		 */
-		System.setProperty("webdriver.http.factory", "apache");
+		//System.setProperty("webdriver.http.factory", "apache");
 
 		WebDriver driver = null;
 

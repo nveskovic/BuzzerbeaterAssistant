@@ -36,7 +36,7 @@ public class SendMessage extends Page{
 			this.subjectFiled.clear();
 			this.subjectFiled.sendKeys(subject);
 
-			if(subjectFiled.getText().equals(subject)) {
+			if(subjectFiled.getAttribute("value").equals(subject)) {
 				break;
 			} else {
 				Sleeper.sleepTightInMillis(500);

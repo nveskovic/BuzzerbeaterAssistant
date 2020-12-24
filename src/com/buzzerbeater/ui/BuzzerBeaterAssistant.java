@@ -325,12 +325,12 @@ public final class BuzzerBeaterAssistant {
 							Messages.SUBJECT_ENGLISH_KEY, textFieldSubjectEnglish.getText());
 					messagesMap.put(
 							Messages.MESSAGE_DOMESTIC_KEY, txtMessageDomestic.getText()
-							+"\n\nSent from my BuzzerBeater Assistant"
+							//+"\n\nSent from my BuzzerBeater Assistant"
 							//+ " [link=https://www.facebook.com/buzzerbeaterassistant]"
 							);
 					messagesMap.put(
 							Messages.MESSAGE_ENGLISH_KEY, txtMessageEN.getText()
-							+"\n\nSent from my BuzzerBeater Assistant"
+							//+"\n\nSent from my BuzzerBeater Assistant"
 							//+ " [link=https://www.facebook.com/buzzerbeaterassistant]"
 							);
 

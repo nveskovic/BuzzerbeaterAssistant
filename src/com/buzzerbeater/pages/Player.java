@@ -18,6 +18,8 @@ import com.buzzerbeater.utils.Sleeper;
 
 public class Player extends Page{
 
+	// https://www2.buzzerbeater.com/player/41515906/overview.aspx
+
 	public Player(WebDriver driver) {
 		super(driver);
 	}
@@ -25,66 +27,60 @@ public class Player extends Page{
 	@FindBy(xpath = "//div[@id='titlebar']//td/h1")
 	private WebElement playerNameHeader;
 
-	@FindBy(id = "ctl00_cphContent_teamName")
+	@FindBy(xpath = "//*[@id = 'playerbox']/*[@class = 'boxheader']/div[2]")
+	private WebElement playerNameAndId; // Mikey Reece (41515906)
+
+	@FindBy(id = "cphContent_teamName")
 	private WebElement ownerLink;
 
-	@FindBy(id = "ctl00_cphContent_btnBid")
+	@FindBy(id = "cphContent_btnBid")
 	private WebElement bidForPlayerButton;
 
-	@FindBy(id = "ctl00_cphContent_tbOffer")
+	@FindBy(id = "cphContent_tbOffer")
 	private WebElement bidNewOfferField;
 
-	@FindBy(id = "ctl00_cphContent_linkBid")
+	@FindBy(id = "cphContent_linkBid")
 	private WebElement bidCurrentTeamLink;
 	
-	@FindBy(id = "ctl00_cphContent_bidsDiv")
+	@FindBy(id = "cphContent_bidsDiv")
 	private WebElement bidsDiv;
 	
-	@FindBy(id = "ctl00_cphContent_ltlAuctionEnds")
+	@FindBy(id = "cphContent_ltlAuctionEnds")
 	private WebElement auctionEndsAtText;
 
-	@FindBy(id = "ctl00_ltlFailure")
+	@FindBy(id = "cphContent_lblErrorText")
 	private WebElement errorMassage;
 	
 	
 	// -- NT SECTION --
 	
-	/*@FindBy(id = "ctl00_cphContent_btnNTRecruitOrDismiss")
-	private WebElement recruitOrDissmisNTButton;*/
-	
 	// recruit
-	//@FindBy(id = "ctl00_cphContent_btnNTRecruit")
-	@FindBy(id = "ctl00_cphContent_btnNTRecruitPopup2")
+	@FindBy(id = "cphContent_btnNTRecruit2")
 	private WebElement recruitToNTButton;
 	
-	@FindBy(id = "ctl00_cphContent_btnRecruitYes2")
+	@FindBy(id = "cphContent_btnRecruitYes2")
 	private WebElement recruitToNTButtonConfirm;
 	
-	// dismiss 
-	// TODO: move this id to some configuration file
-	private final String dissmissFromNTButtonByID = "ctl00_cphContent_btnNTDismissPopup2";
+	// dismiss
+	private static final String dissmissFromNTButtonByID = "cphContent_btnNTDismiss2";
 	@FindBy(id = dissmissFromNTButtonByID)
 	private WebElement dissmissFromNTButton;
-	
-	// TODO: move this id to some configuration file
-	private final String dismissFromNTPanelConfirmationID = "ctl00_cphContent_pnlDismissNT2";
+
+	private static final String dismissFromNTPanelConfirmationID = "cphContent_pnlDismissNT2";
 	@FindBy(id = dismissFromNTPanelConfirmationID)
 	private WebElement dismissFromNTPanelConfirmation;
 	
-	// TODO: move this id to some configuration file
-	private final String dissmissFromNTPopupConfirmationID = "cbDismissPopup2";
-	@FindBy(id = dissmissFromNTPopupConfirmationID)
+	@FindBy(id = "cbDismissPopup2")
 	private WebElement dissmissFromNTPopupConfirmation;
-	
-	// TODO: move this id to some configuration file
-	private final String dissmissFromNTButtonConfirmationYesByID = "ctl00_cphContent_btnDismissYes2";
+
+	private static final String dissmissFromNTButtonConfirmationYesByID = "cphContent_btnDismissYes2";
 	@FindBy(id = dissmissFromNTButtonConfirmationYesByID)
 	private WebElement dissmissFromNTButtonConfirmationYes;
 	
-	@FindBy(id = "ctl00_cphContent_lblNT")
+	@FindBy(id = "cphContent_lblNT")
 	private WebElement ntStatusTextForNTManager;
-	
-	@FindBy(id = "ctl00_cphContent_lblNotYourNT")
+
+	@FindBy(id = "cphContent_lblNotYourNT")
 	private WebElement ntStatusTextNotYourNT;
 	
 	// ----------------
@@ -93,35 +89,35 @@ public class Player extends Page{
 	@FindBy (id = "playerPersonalInfo")
 	private WebElement playerPersonalInfo;
 	
-	@FindBy (id = "ctl00_cphContent_potential_linkDen")
+	@FindBy (id = "cphContent_potential_linkDen")
 	private WebElement potentialLink;
 	
 	// player skills
-	@FindBy(id = "ctl00_cphContent_skillTable_sdJumpShot_linkDen")
+	@FindBy(id = "cphContent_skillTable_sdJumpShot_linkDen")
 	private WebElement skillJSlink;
-	@FindBy(id = "ctl00_cphContent_skillTable_sdJumpRange_linkDen")
+	@FindBy(id = "cphContent_skillTable_sdJumpRange_linkDen")
 	private WebElement skillJRlink;
-	@FindBy(id = "ctl00_cphContent_skillTable_sdperimDef_linkDen")
+	@FindBy(id = "cphContent_skillTable_sdperimDef_linkDen")
 	private WebElement skillODlink;
-	@FindBy(id = "ctl00_cphContent_skillTable_sdhandling_linkDen")
+	@FindBy(id = "cphContent_skillTable_sdhandling_linkDen")
 	private WebElement skillHAlink;
-	@FindBy(id = "ctl00_cphContent_skillTable_sddriving_linkDen")
+	@FindBy(id = "cphContent_skillTable_sddriving_linkDen")
 	private WebElement skillDRlink;
-	@FindBy(id = "ctl00_cphContent_skillTable_sdpassing_linkDen")
+	@FindBy(id = "cphContent_skillTable_sdpassing_linkDen")
 	private WebElement skillPAlink;
-	@FindBy(id = "ctl00_cphContent_skillTable_sdinsideShot_linkDen")
+	@FindBy(id = "cphContent_skillTable_sdinsideShot_linkDen")
 	private WebElement skillISlink;
-	@FindBy(id = "ctl00_cphContent_skillTable_sdinsideDef_linkDen")
+	@FindBy(id = "cphContent_skillTable_sdinsideDef_linkDen")
 	private WebElement skillIDlink;
-	@FindBy(id = "ctl00_cphContent_skillTable_sdrebound_linkDen")
+	@FindBy(id = "cphContent_skillTable_sdrebound_linkDen")
 	private WebElement skillRBlink;
-	@FindBy(id = "ctl00_cphContent_skillTable_sdshotBlock_linkDen")
+	@FindBy(id = "cphContent_skillTable_sdshotBlock_linkDen")
 	private WebElement skillSBlink;
-	@FindBy(id = "ctl00_cphContent_skillTable_sdstamina_linkDen")
+	@FindBy(id = "cphContent_skillTable_sdstamina_linkDen")
 	private WebElement skillSTlink;
-	@FindBy(id = "ctl00_cphContent_skillTable_sdfreeThrow_linkDen")
+	@FindBy(id = "cphContent_skillTable_sdfreeThrow_linkDen")
 	private WebElement skillFTlink;
-	@FindBy(id = "ctl00_cphContent_skillTable_sdexperience_linkDen")
+	@FindBy(id = "cphContent_skillTable_sdexperience_linkDen")
 	private WebElement skillEXlink;
 
 	public String getPlayerName() {
@@ -348,7 +344,7 @@ public class Player extends Page{
 		System.out.println("yesButton is enabled: " + yesButton.isEnabled());
 		System.out.println("yesButton attribute style: " + yesButton.getAttribute("style"));
 				
-		/* <div id="ctl00_cphContent_pnlDismissNT" 
+		/* <div id="cphContent_pnlDismissNT"
 		 * style="display: block; position: fixed; z-index: 100001; 
 		 * top: 33.0149%; left: 34.2447%; margin: 0px;">
 		 */
@@ -568,9 +564,12 @@ public class Player extends Page{
 			return Integer.parseInt(potValue);
 	}
 
-	private String getPlayerID() {
-		return driver.getCurrentUrl()
-				.replace("http://www.buzzerbeater.com/player/", "")
-				.replace("/overview.aspx", "");
+	public String getPlayerID() {
+		String id = "";
+		try {
+			// https://www2.buzzerbeater.com/player/41515906/overview.aspx
+			id = "" + Long.parseLong(this.driver.getCurrentUrl().split("/")[4]);
+		} catch(Exception e){}
+		return id;
 	}
 }

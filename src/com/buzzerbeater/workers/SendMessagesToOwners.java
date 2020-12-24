@@ -79,9 +79,10 @@ public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 			}
 			
 			// authenticate team
-			if(!this.teamID.equals(overviewPage.getTeamID())) {
+			String teamIdInThePage = overviewPage.getTeamIDFromMenu();
+			if(!this.teamID.equals(teamIdInThePage)) {
 				outputArea.setForeground(Color.RED);
-				outputArea.setText("ERROR: your team is not licenesed to use this tool!");
+				outputArea.setText("ERROR: Your team ID ("+this.teamID+") does not match the one in the Overview page ("+teamIdInThePage+")");
 				return false;
 			}
 			
@@ -112,7 +113,7 @@ public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 						overviewPage = loginPage.login(username, password, Overview.class);
 						driver.get(playerURL);
 						playerPage = PageFactory.initElements(driver, Player.class);
-						if(!this.teamID.equals(playerPage.getTeamID())) {
+						if(!this.teamID.equals(playerPage.getTeamIDFromMenu())) {
 							outputArea.setForeground(Color.RED);
 							outputArea.setText("ERROR: your team is not licenesed to use this tool!");
 							return false;
@@ -132,6 +133,7 @@ public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 					}
 					
 					String playerName = playerPage.getPlayerName();
+					String playerID = playerPage.getPlayerID();
 					Team teamPage = playerPage.clickOnOwnerLink();
 					
 					if(!teamPage.isHuman()) {
@@ -147,13 +149,23 @@ public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 						messageTemplate=messagesAndSubjects.get(Messages.MESSAGE_ENGLISH_KEY);
 						subjectTemplate=messagesAndSubjects.get(Messages.SUBJECT_ENGLISH_KEY);
 					}
+
+					Thread.sleep(1000);
+					SendMessage sendMessagePage = teamPage.clickOnSendMessageLink();
+
+
+					String playeNamePlaceholder = messagesAndSubjects.get(Messages.PLAYER_NAME_PLACEHOLDER_KEY);
+					String playeIDPlaceholder = messagesAndSubjects.get(Messages.PLAYER_ID_PLACEHOLDER_KEY);
+
+					String subject = subjectTemplate
+							.replaceAll(playeNamePlaceholder, playerName)
+							.replaceAll(playeIDPlaceholder, playerID);
+					String content = messageTemplate
+							.replaceAll(playeNamePlaceholder, playerName)
+							.replaceAll(playeIDPlaceholder, playerID);
 					
-					SendMessage sendMessagePage = teamPage.clickOnSendMessageIcon();
-					
-					sendMessagePage.setSubject(subjectTemplate.replaceAll(
-							messagesAndSubjects.get(Messages.PLAYER_NAME_PLACEHOLDER_KEY), playerName));
-					sendMessagePage.setMessage(messageTemplate.replaceAll(
-							messagesAndSubjects.get(Messages.PLAYER_NAME_PLACEHOLDER_KEY), playerName));
+					sendMessagePage.setSubject(subject);
+					sendMessagePage.setMessage(content);
 					SentMessage sentMessagePage = sendMessagePage.clickOnSendButton();
 					Thread.sleep(1000);
 					

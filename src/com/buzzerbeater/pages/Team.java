@@ -6,6 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Team extends Page{
 
 	public Team(WebDriver driver) {
@@ -14,12 +17,20 @@ public class Team extends Page{
 
 	@FindBy(xpath = "//*[@id='teammenu']//img[contains(@src, 'sendmail')]")
 	WebElement sendMessageIcon;
+
+	@FindBy(id = "cphContent_SubMenu_Label3")
+	WebElement sendMessageLink;
 	
-	@FindBy(id = "ctl00_cphContent_ltlCountryName")
+	@FindBy(id = "cphContent_ltlCountryName")
 	WebElement countryLink;
 	
 	public SendMessage clickOnSendMessageIcon() {
 		sendMessageIcon.click();
+		return PageFactory.initElements(driver, SendMessage.class);
+	}
+
+	public SendMessage clickOnSendMessageLink() {
+		sendMessageLink.click();
 		return PageFactory.initElements(driver, SendMessage.class);
 	}
 	
@@ -44,5 +55,20 @@ public class Team extends Page{
 			return true;
 		else
 			return false;
+	}
+
+	public String getTeamID() {
+		String id = "";
+		try {
+			String href = driver.findElement(
+					By.xpath("//h1/a")).getAttribute("href");
+			// parse href
+			Pattern p = Pattern.compile(".*team/([0-9]+?)/overview.*");
+			Matcher m = p.matcher(href);
+			if(m.matches())
+				id = m.group(1);
+
+		} catch (Exception e){}
+		return id;
 	}
 }

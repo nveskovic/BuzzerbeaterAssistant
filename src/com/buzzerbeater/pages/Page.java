@@ -13,7 +13,7 @@ public class Page {
 	
 	protected WebDriver driver;
 	protected String title;
-	protected static String baseUrl = "http://www.buzzerbeater.com";
+	public static String baseUrl = "https://www2.buzzerbeater.com";
 	protected static String username;
 	protected static String password;
 	
@@ -32,13 +32,11 @@ public class Page {
 		}
 	}
 	
-	public String getTeamID() {
+	public String getTeamIDFromMenu() {
 		String id = "";
 		try {
 			String href = driver.findElement(
-					By.xpath(""
-							+ "//div[@class='boxcontent']/ul/li/a[contains(@href, '/overview') "
-							+ "and contains(@href, '/team/')]")).getAttribute("href");
+					By.id("menuTeamName")).getAttribute("href");
 			// parse href
 			Pattern p = Pattern.compile(".*team/([0-9]+?)/overview.*");
 			Matcher m = p.matcher(href);

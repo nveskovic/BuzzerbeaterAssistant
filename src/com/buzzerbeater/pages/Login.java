@@ -14,13 +14,13 @@ public class Login extends Page{
 	@FindBy(id = "ctl00_pnlLoginBox")
 	WebElement loginPanel;
 	
-	@FindBy(name = "ctl00$txtLoginName")
+	@FindBy(id = "txtLoginName")
 	WebElement usernameField;
 	
-	@FindBy(name = "ctl00$txtPassword")
+	@FindBy(id = "txtPassword")
 	WebElement passwordField;
 	
-	@FindBy(name = "ctl00$btnLogin")
+	@FindBy(id = "btnLogin")
 	WebElement loginButton;
 
 	public Page login(String user, String pwd){

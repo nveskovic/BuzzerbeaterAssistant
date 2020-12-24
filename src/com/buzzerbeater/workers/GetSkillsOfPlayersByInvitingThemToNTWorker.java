@@ -134,6 +134,7 @@ public class GetSkillsOfPlayersByInvitingThemToNTWorker extends SwingWorker<Bool
 						if(playerPage.getPotentialValue()< minPotential) {
 							i++;
 							outputArea.append("SKIP due to lower potential" + System.getProperty("line.separator"));
+							setProgress(100 * i / playersURLs.size());
 							continue;
 						}
 						
@@ -146,6 +147,7 @@ public class GetSkillsOfPlayersByInvitingThemToNTWorker extends SwingWorker<Bool
 							if(isOwnerRetired) {
 								i++;
 								outputArea.append("SKIP because owner is RETIRED" + System.getProperty("line.separator"));
+								setProgress(100 * i / playersURLs.size());
 								continue;
 							}
 						}

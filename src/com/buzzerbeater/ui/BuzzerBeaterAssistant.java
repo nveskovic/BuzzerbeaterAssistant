@@ -508,6 +508,7 @@ public final class BuzzerBeaterAssistant {
 		userInfoTab.add(comboBoxBrowser);
 
 		JPanel tradingAgentTab = new JPanel();
+		tradingAgentTab.setEnabled(false);
 		tabbedPane.addTab("TradingAgent", null, tradingAgentTab, null);
 		tradingAgentTab.setLayout(null);
 
@@ -535,12 +536,14 @@ public final class BuzzerBeaterAssistant {
 		txtPlayerID1.setFont(new Font("Courier New", Font.PLAIN, 22));
 		txtPlayerID1.setColumns(10);
 		txtPlayerID1.setBounds(123, 136, 148, 48);
+		txtPlayerID1.setEnabled(false);
 		tradingAgentTab.add(txtPlayerID1);
 
 		txtMaxPrice1 = new JTextField();
 		txtMaxPrice1.setFont(new Font("Courier New", Font.PLAIN, 22));
 		txtMaxPrice1.setColumns(10);
 		txtMaxPrice1.setBounds(278, 136, 116, 48);
+		txtMaxPrice1.setEnabled(false);
 		tradingAgentTab.add(txtMaxPrice1);
 
 		JLabel lblAgentStatus1;
@@ -551,62 +554,65 @@ public final class BuzzerBeaterAssistant {
 		tradingAgentTab.add(lblAgentStatus1);
 
 		JButton btnRunStopWorker1 = new JButton("Run");
-		btnRunStopWorker1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(btnRunStopWorker1.isEnabled()) {
-					if(btnRunStopWorker1.getText().equals("Run")) { // run worker
-						autobidWorkers[0] = new AutobidPlayerOnSaleWorker(
-								usernameField.getText(), 
-								new String(passwordField.getPassword()), 
-								teamIDField.getText(), 
-								txtPlayerID1.getText(), 
-								Integer.parseInt(txtMaxPrice1.getText()), 
-								lblAuctionEndsIn1,
-								lblAgentStatus1,
-								chckbxUseVisibleBrowser.isSelected(),
-								BrowserType.valueOf(comboBoxBrowser.getSelectedItem().toString()) // browser type
-								);
-
-						autobidWorkers[0].addPropertyChangeListener(
-								new PropertyChangeListener() {
-									public  void propertyChange(PropertyChangeEvent evt) {
-										if ("state".equals(evt.getPropertyName())) {
-											if(autobidWorkers[0].getState().equals(SwingWorker.StateValue.DONE)) {
-												btnRunStopWorker1.setText("Run");
-												txtPlayerID1.setEnabled(true);
-												txtMaxPrice1.setEnabled(true);
-												btnRunStopWorker1.setEnabled(true);
-											}
-										}
-									}
-								});
-
-						autobidWorkers[0].execute();
-						btnRunStopWorker1.setText("Stop");
-						txtPlayerID1.setEnabled(false);
-						txtMaxPrice1.setEnabled(false);
-					} else { // stop worker
-						btnRunStopWorker1.setEnabled(false);
-						autobidWorkers[0].cancel(true);	
-					}
-				}
-			}
-		});
+//		btnRunStopWorker1.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent arg0) {
+//				if(btnRunStopWorker1.isEnabled()) {
+//					if(btnRunStopWorker1.getText().equals("Run")) { // run worker
+//						autobidWorkers[0] = new AutobidPlayerOnSaleWorker(
+//								usernameField.getText(),
+//								new String(passwordField.getPassword()),
+//								teamIDField.getText(),
+//								txtPlayerID1.getText(),
+//								Integer.parseInt(txtMaxPrice1.getText()),
+//								lblAuctionEndsIn1,
+//								lblAgentStatus1,
+//								chckbxUseVisibleBrowser.isSelected(),
+//								BrowserType.valueOf(comboBoxBrowser.getSelectedItem().toString()) // browser type
+//								);
+//
+//						autobidWorkers[0].addPropertyChangeListener(
+//								new PropertyChangeListener() {
+//									public  void propertyChange(PropertyChangeEvent evt) {
+//										if ("state".equals(evt.getPropertyName())) {
+//											if(autobidWorkers[0].getState().equals(SwingWorker.StateValue.DONE)) {
+//												btnRunStopWorker1.setText("Run");
+//												txtPlayerID1.setEnabled(true);
+//												txtMaxPrice1.setEnabled(true);
+//												btnRunStopWorker1.setEnabled(true);
+//											}
+//										}
+//									}
+//								});
+//
+//						autobidWorkers[0].execute();
+//						btnRunStopWorker1.setText("Stop");
+//						txtPlayerID1.setEnabled(false);
+//						txtMaxPrice1.setEnabled(false);
+//					} else { // stop worker
+//						btnRunStopWorker1.setEnabled(false);
+//						autobidWorkers[0].cancel(true);
+//					}
+//				}
+//			}
+//		});
 		btnRunStopWorker1.setFont(new Font("Courier New", Font.PLAIN, 22));
 		btnRunStopWorker1.setBounds(12, 135, 97, 48);
+		btnRunStopWorker1.setEnabled(false);
 		tradingAgentTab.add(btnRunStopWorker1);
 
 		txtPlayerID2 = new JTextField();
 		txtPlayerID2.setFont(new Font("Courier New", Font.PLAIN, 22));
 		txtPlayerID2.setColumns(10);
 		txtPlayerID2.setBounds(123, 219, 148, 48);
+		txtPlayerID2.setEnabled(false);
 		tradingAgentTab.add(txtPlayerID2);
 
 		txtMaxPrice2 = new JTextField();
 		txtMaxPrice2.setFont(new Font("Courier New", Font.PLAIN, 22));
 		txtMaxPrice2.setColumns(10);
 		txtMaxPrice2.setBounds(278, 219, 116, 48);
+		txtMaxPrice2.setEnabled(false);
 		tradingAgentTab.add(txtMaxPrice2);
 
 		JLabel lblAgentStatus2 = new JLabel("");
@@ -621,50 +627,51 @@ public final class BuzzerBeaterAssistant {
 		tradingAgentTab.add(lblAuctionEndsIn2);
 
 		JButton btnRunStopWorker2 = new JButton("Run");
-		btnRunStopWorker2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(btnRunStopWorker2.isEnabled()) {
-					if(btnRunStopWorker2.getText().equals("Run")) { // run worker
-						autobidWorkers[1] = new AutobidPlayerOnSaleWorker(
-								usernameField.getText(), 
-								new String(passwordField.getPassword()), 
-								teamIDField.getText(), 
-								txtPlayerID2.getText(), 
-								Integer.parseInt(txtMaxPrice2.getText()), 
-								lblAuctionEndsIn2,
-								lblAgentStatus2,
-								chckbxUseVisibleBrowser.isSelected(),
-								BrowserType.valueOf(comboBoxBrowser.getSelectedItem().toString()) // browser type
-								);
-
-						autobidWorkers[1].addPropertyChangeListener(
-								new PropertyChangeListener() {
-									public  void propertyChange(PropertyChangeEvent evt) {
-										if ("state".equals(evt.getPropertyName())) {
-											if(autobidWorkers[1].getState().equals(SwingWorker.StateValue.DONE)) {
-												btnRunStopWorker2.setText("Run");
-												txtPlayerID2.setEnabled(true);
-												txtMaxPrice2.setEnabled(true);
-												btnRunStopWorker2.setEnabled(true);
-											}
-										}
-									}
-								});
-
-						autobidWorkers[1].execute();
-						btnRunStopWorker2.setText("Stop");
-						txtPlayerID2.setEnabled(false);
-						txtMaxPrice2.setEnabled(false);
-					} else { // stop worker
-						btnRunStopWorker2.setEnabled(false);
-						autobidWorkers[1].cancel(true);	
-					}
-				}
-			}
-		});
+//		btnRunStopWorker2.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent arg0) {
+//				if(btnRunStopWorker2.isEnabled()) {
+//					if(btnRunStopWorker2.getText().equals("Run")) { // run worker
+//						autobidWorkers[1] = new AutobidPlayerOnSaleWorker(
+//								usernameField.getText(),
+//								new String(passwordField.getPassword()),
+//								teamIDField.getText(),
+//								txtPlayerID2.getText(),
+//								Integer.parseInt(txtMaxPrice2.getText()),
+//								lblAuctionEndsIn2,
+//								lblAgentStatus2,
+//								chckbxUseVisibleBrowser.isSelected(),
+//								BrowserType.valueOf(comboBoxBrowser.getSelectedItem().toString()) // browser type
+//								);
+//
+//						autobidWorkers[1].addPropertyChangeListener(
+//								new PropertyChangeListener() {
+//									public  void propertyChange(PropertyChangeEvent evt) {
+//										if ("state".equals(evt.getPropertyName())) {
+//											if(autobidWorkers[1].getState().equals(SwingWorker.StateValue.DONE)) {
+//												btnRunStopWorker2.setText("Run");
+//												txtPlayerID2.setEnabled(true);
+//												txtMaxPrice2.setEnabled(true);
+//												btnRunStopWorker2.setEnabled(true);
+//											}
+//										}
+//									}
+//								});
+//
+//						autobidWorkers[1].execute();
+//						btnRunStopWorker2.setText("Stop");
+//						txtPlayerID2.setEnabled(false);
+//						txtMaxPrice2.setEnabled(false);
+//					} else { // stop worker
+//						btnRunStopWorker2.setEnabled(false);
+//						autobidWorkers[1].cancel(true);
+//					}
+//				}
+//			}
+//		});
 		btnRunStopWorker2.setFont(new Font("Courier New", Font.PLAIN, 22));
 		btnRunStopWorker2.setBounds(12, 218, 97, 48);
+		btnRunStopWorker2.setEnabled(false);
 		tradingAgentTab.add(btnRunStopWorker2);
 
 		lblAuctionEndsIn1 = new JLabel("");
@@ -704,53 +711,54 @@ public final class BuzzerBeaterAssistant {
 		tradingAgentTab.add(lblStaffAgentStatus1);
 
 		JButton btnRunStopStaffWorker1 = new JButton("Run");
-		btnRunStopStaffWorker1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(btnRunStopStaffWorker1.isEnabled()) {
-					if(btnRunStopStaffWorker1.getText().equals("Run")) { // run worker
-						autobidStaffWorkers[0] = new AutobidStaffOnSaleWorker(
-								usernameField.getText(), 
-								new String(passwordField.getPassword()), 
-								teamIDField.getText(), 
-								txtStaffID1.getText(), 
-								Integer.parseInt(txtStaffMaxPrice1.getText()), 
-								30, 
-								true, 
-								15,
-								lblStaffAuctionEndsIn1,
-								lblStaffAgentStatus1,
-								chckbxUseVisibleBrowser.isSelected(),
-								BrowserType.valueOf(comboBoxBrowser.getSelectedItem().toString()) // browser type
-								);
-
-						autobidStaffWorkers[0].addPropertyChangeListener(
-								new PropertyChangeListener() {
-									public  void propertyChange(PropertyChangeEvent evt) {
-										if ("state".equals(evt.getPropertyName())) {
-											if(autobidStaffWorkers[0].getState().equals(SwingWorker.StateValue.DONE)) {
-												btnRunStopWorker1.setText("Run");
-												txtStaffID1.setEnabled(true);
-												txtStaffMaxPrice1.setEnabled(true);
-												btnRunStopStaffWorker1.setEnabled(true);
-											}
-										}
-									}
-								});
-
-						autobidStaffWorkers[0].execute();
-						btnRunStopWorker1.setText("Stop");
-						txtStaffID1.setEnabled(false);
-						txtStaffMaxPrice1.setEnabled(false);
-					} else { // stop worker
-						btnRunStopWorker1.setEnabled(false);
-						autobidStaffWorkers[0].cancel(true);	
-					}
-				}
-			}
-		});
+//		btnRunStopStaffWorker1.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent arg0) {
+//				if(btnRunStopStaffWorker1.isEnabled()) {
+//					if(btnRunStopStaffWorker1.getText().equals("Run")) { // run worker
+//						autobidStaffWorkers[0] = new AutobidStaffOnSaleWorker(
+//								usernameField.getText(),
+//								new String(passwordField.getPassword()),
+//								teamIDField.getText(),
+//								txtStaffID1.getText(),
+//								Integer.parseInt(txtStaffMaxPrice1.getText()),
+//								30,
+//								true,
+//								15,
+//								lblStaffAuctionEndsIn1,
+//								lblStaffAgentStatus1,
+//								chckbxUseVisibleBrowser.isSelected(),
+//								BrowserType.valueOf(comboBoxBrowser.getSelectedItem().toString()) // browser type
+//								);
+//
+//						autobidStaffWorkers[0].addPropertyChangeListener(
+//								new PropertyChangeListener() {
+//									public  void propertyChange(PropertyChangeEvent evt) {
+//										if ("state".equals(evt.getPropertyName())) {
+//											if(autobidStaffWorkers[0].getState().equals(SwingWorker.StateValue.DONE)) {
+//												btnRunStopWorker1.setText("Run");
+//												txtStaffID1.setEnabled(true);
+//												txtStaffMaxPrice1.setEnabled(true);
+//												btnRunStopStaffWorker1.setEnabled(true);
+//											}
+//										}
+//									}
+//								});
+//
+//						autobidStaffWorkers[0].execute();
+//						btnRunStopWorker1.setText("Stop");
+//						txtStaffID1.setEnabled(false);
+//						txtStaffMaxPrice1.setEnabled(false);
+//					} else { // stop worker
+//						btnRunStopWorker1.setEnabled(false);
+//						autobidStaffWorkers[0].cancel(true);
+//					}
+//				}
+//			}
+//		});
 		btnRunStopStaffWorker1.setFont(new Font("Courier New", Font.PLAIN, 22));
 		btnRunStopStaffWorker1.setBounds(12, 411, 97, 48);
+		btnRunStopStaffWorker1.setEnabled(false);
 		tradingAgentTab.add(btnRunStopStaffWorker1);
 
 		JButton btnRunStopStaffWorker2 = new JButton("Run");
@@ -763,6 +771,7 @@ public final class BuzzerBeaterAssistant {
 		txtStaffID1.setFont(new Font("Courier New", Font.PLAIN, 22));
 		txtStaffID1.setColumns(10);
 		txtStaffID1.setBounds(123, 412, 148, 48);
+		txtStaffID1.setEnabled(false);
 		tradingAgentTab.add(txtStaffID1);
 
 		txtStaffID2 = new JTextField();
@@ -783,6 +792,7 @@ public final class BuzzerBeaterAssistant {
 		txtStaffMaxPrice1.setFont(new Font("Courier New", Font.PLAIN, 22));
 		txtStaffMaxPrice1.setColumns(10);
 		txtStaffMaxPrice1.setBounds(278, 412, 116, 48);
+		txtStaffMaxPrice1.setEnabled(false);
 		tradingAgentTab.add(txtStaffMaxPrice1);
 
 		JLabel lblPlayersSectionHeader = new JLabel("Players Trading Agents");

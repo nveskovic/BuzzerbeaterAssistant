@@ -185,7 +185,7 @@ public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 				setProgress(100 * (i+1) / playersURLs.size());
 			}
 		} finally {
-			driver.close();
+			driver.quit();
 		}
 		
 		// update the lists

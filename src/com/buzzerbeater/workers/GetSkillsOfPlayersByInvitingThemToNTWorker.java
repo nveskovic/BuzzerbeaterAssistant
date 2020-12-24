@@ -195,7 +195,7 @@ public class GetSkillsOfPlayersByInvitingThemToNTWorker extends SwingWorker<Bool
 				}
 			} catch(Exception e) {
 				try {
-					driver.close();
+					driver.quit();
 				} catch(Exception e1){}
 				driver = null;
 			} finally {

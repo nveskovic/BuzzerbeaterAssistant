@@ -38,8 +38,8 @@ public class Player {
 		return toReturn;
 	}
 	
-	public String getCsvPlayerInfo() {
-		String toReturn = name + ",http://www.buzzerbeater.com/player/" + id + "/overview.aspx"
+	public String getCsvPlayerInfo(String baseUrl) {
+		String toReturn = name + "," + baseUrl + "/player/" + id + "/overview.aspx"
 				+ "," + potential + "," + owner + "," + age + "," + height
 				+ "," + dmi + "," + salary;
 		for (String skill : skillNames) {

@@ -942,6 +942,7 @@ public final class BuzzerBeaterAssistant {
 		textFieldOutputFileDraftSummary.setText("playersURLs.txt");
 		textFieldOutputFileDraftSummary.setColumns(10);
 		textFieldOutputFileDraftSummary.setBounds(715, 26, 116, 22);
+		textFieldOutputFileDraftSummary.setEnabled(false);
 		draftAndPlayersSkills.add(textFieldOutputFileDraftSummary);
 
 		JLabel seasonLbl = new JLabel("Season");
@@ -952,6 +953,7 @@ public final class BuzzerBeaterAssistant {
 		textFieldseason.setText("0");
 		textFieldseason.setColumns(10);
 		textFieldseason.setBounds(912, 26, 116, 22);
+		textFieldseason.setEnabled(false);
 		draftAndPlayersSkills.add(textFieldseason);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -962,6 +964,7 @@ public final class BuzzerBeaterAssistant {
 		textAreaLeaguIDsNotexpanded.setFont(new Font("Monospaced", Font.PLAIN, 18));
 		textAreaLeaguIDsNotexpanded.setText("1277\r\n1278-1281\r\n1282-1297\r\n7369-7432");
 		scrollPane.setViewportView(textAreaLeaguIDsNotexpanded);
+		textAreaLeaguIDsNotexpanded.setEnabled(false);
 
 		JLabel lblLeagueIDs = new JLabel("League IDs");
 		lblLeagueIDs.setBounds(639, 58, 110, 16);
@@ -984,66 +987,68 @@ public final class BuzzerBeaterAssistant {
 		draftAndPlayersSkills.add(lblLeagueIdsExpanded);
 
 		JButton btnGetPlayerURLFromDraft = new JButton("Get player URLs");
-		btnGetPlayerURLFromDraft.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				// expand the list of league ids
-				List<String> leagueIDsNotExpanded = SwingUIHelper.getListOfLinesFromJTextArea(textAreaLeaguIDsNotexpanded);
-				List<String> leagueIDsExpanded = new ArrayList<String>();
-				for(String nonexpanded : leagueIDsNotExpanded) {
-					if(nonexpanded.contains("-")) {
-						String[] bounds = nonexpanded.split("-");
-						try{
-							int min = Integer.parseInt(bounds[0].trim());
-							int max = Integer.parseInt(bounds[1].trim());
-							for(int i=min; i<=max; i++){
-								leagueIDsExpanded.add(""+i);
-							}
-						} catch(Exception e) {
-							textAreaLog.setText("ERROR: Can't expand league IDs from non-expanded list");
-							return;
-						}
-					} else {
-						leagueIDsExpanded.add(nonexpanded.trim());
-					}
-				}
-
-				// display expanded league ids
-				SwingUIHelper.setListOfLinesToJTextArea(leagueIDsExpanded, textAreaLeaguIDsExpanded, ",");
-
-				// get player URLs from draft page
-				GetPlayersFromDraftWorker getPlayersFromDraftWorker = new GetPlayersFromDraftWorker(						 
-						usernameField.getText(), 
-						new String(passwordField.getPassword()), 
-						teamIDField.getText(), 
-						leagueIDsExpanded, 
-						Integer.parseInt(textFieldseason.getText()), 
-						new File(textFieldOutputFileDraftSummary.getText()),
-						textAreaLog, 
-						chckbxUseVisibleBrowser.isSelected(),
-						BrowserType.valueOf(comboBoxBrowser.getSelectedItem().toString()) // browser type
-						);
-
-				getPlayersFromDraftWorker.addPropertyChangeListener(
-						new PropertyChangeListener() {
-							public  void propertyChange(PropertyChangeEvent evt) {
-								if ("progress".equals(evt.getPropertyName())) {
-									draftAndPlayersProgressBar.setValue((Integer)evt.getNewValue());
-								} else if ("state".equals(evt.getPropertyName())) {
-									if(getPlayersFromDraftWorker.getState().equals(SwingWorker.StateValue.DONE)) {
-										btnGetPlayerURLFromDraft.setEnabled(true);
-									} else {
-										btnGetPlayerURLFromDraft.setEnabled(false);
-									}
-								}
-							}
-						});
-
-				draftAndPlayersProgressBar.setValue(0);
-				getPlayersFromDraftWorker.execute();
-			}
-		});
+//		btnGetPlayerURLFromDraft.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent arg0) {
+//				// expand the list of league ids
+//				List<String> leagueIDsNotExpanded = SwingUIHelper.getListOfLinesFromJTextArea(textAreaLeaguIDsNotexpanded);
+//				List<String> leagueIDsExpanded = new ArrayList<String>();
+//				for(String nonexpanded : leagueIDsNotExpanded) {
+//					if(nonexpanded.contains("-")) {
+//						String[] bounds = nonexpanded.split("-");
+//						try{
+//							int min = Integer.parseInt(bounds[0].trim());
+//							int max = Integer.parseInt(bounds[1].trim());
+//							for(int i=min; i<=max; i++){
+//								leagueIDsExpanded.add(""+i);
+//							}
+//						} catch(Exception e) {
+//							textAreaLog.setText("ERROR: Can't expand league IDs from non-expanded list");
+//							return;
+//						}
+//					} else {
+//						leagueIDsExpanded.add(nonexpanded.trim());
+//					}
+//				}
+//
+//				// display expanded league ids
+//				SwingUIHelper.setListOfLinesToJTextArea(leagueIDsExpanded, textAreaLeaguIDsExpanded, ",");
+//
+//				// get player URLs from draft page
+//				GetPlayersFromDraftWorker getPlayersFromDraftWorker = new GetPlayersFromDraftWorker(
+//						usernameField.getText(),
+//						new String(passwordField.getPassword()),
+//						teamIDField.getText(),
+//						leagueIDsExpanded,
+//						Integer.parseInt(textFieldseason.getText()),
+//						new File(textFieldOutputFileDraftSummary.getText()),
+//						textAreaLog,
+//						chckbxUseVisibleBrowser.isSelected(),
+//						BrowserType.valueOf(comboBoxBrowser.getSelectedItem().toString()) // browser type
+//						);
+//
+//				getPlayersFromDraftWorker.addPropertyChangeListener(
+//						new PropertyChangeListener() {
+//							public  void propertyChange(PropertyChangeEvent evt) {
+//								if ("progress".equals(evt.getPropertyName())) {
+//									draftAndPlayersProgressBar.setValue((Integer)evt.getNewValue());
+//								} else if ("state".equals(evt.getPropertyName())) {
+//									if(getPlayersFromDraftWorker.getState().equals(SwingWorker.StateValue.DONE)) {
+//										btnGetPlayerURLFromDraft.setEnabled(true);
+//									} else {
+//										btnGetPlayerURLFromDraft.setEnabled(false);
+//									}
+//								}
+//							}
+//						});
+//
+//				draftAndPlayersProgressBar.setValue(0);
+//				getPlayersFromDraftWorker.execute();
+//			}
+//		});
 		btnGetPlayerURLFromDraft.setBounds(1099, 25, 168, 25);
+		btnGetPlayerURLFromDraft.setEnabled(false); // Scouting is now done through BB API
+		btnGetPlayerURLFromDraft.setToolTipText("Scouting is now done through BB API");
 		draftAndPlayersSkills.add(btnGetPlayerURLFromDraft);
 
 		JSeparator separator = new JSeparator();

@@ -13,7 +13,7 @@ public class Page {
 	
 	protected WebDriver driver;
 	protected String title;
-	protected static String baseUrl = "https://www2.buzzerbeater.com";
+	public static String baseUrl = "https://www2.buzzerbeater.com";
 	protected static String username;
 	protected static String password;
 	
@@ -32,7 +32,7 @@ public class Page {
 		}
 	}
 	
-	public String getTeamID() {
+	public String getTeamIDFromMenu() {
 		String id = "";
 		try {
 			String href = driver.findElement(

@@ -39,7 +39,6 @@ public class GetSkillsOfPlayersByInvitingThemToNTWorker extends SwingWorker<Bool
 	public GetSkillsOfPlayersByInvitingThemToNTWorker(String username, String password, String teamID,
 			List<String> players, int minPotential, boolean skipBotAndRetired, boolean inviteToNT,
 			File outputCSV, JTextArea outputArea, boolean visibleBrowser, BrowserType browserType) {
-		
 		this.playersURLs=players;
 		this.minPotential = minPotential;
 		this.username=username;
@@ -100,9 +99,9 @@ public class GetSkillsOfPlayersByInvitingThemToNTWorker extends SwingWorker<Bool
 				}
 				
 				// authenticate team
-				if(!this.teamID.equals(overviewPage.getTeamID())) {
+				if(!this.teamID.equals(overviewPage.getTeamIDFromMenu())) {
 					outputArea.setForeground(Color.RED);
-					outputArea.setText("ERROR: your team is not licenesed to use this tool!");
+					outputArea.setText("ERROR: Your team ID does not match the ID from the Overview page");
 					return false;
 				}
 				
@@ -123,7 +122,7 @@ public class GetSkillsOfPlayersByInvitingThemToNTWorker extends SwingWorker<Bool
 							overviewPage = loginPage.login(username, password, Overview.class);
 							driver.get(playerURL);
 							playerPage = PageFactory.initElements(driver, Player.class);
-							if(!this.teamID.equals(playerPage.getTeamID())) {
+							if(!this.teamID.equals(playerPage.getTeamIDFromMenu())) {
 								outputArea.setForeground(Color.RED);
 								outputArea.setText("ERROR: your team is not licenesed to use this tool!");
 								return false;
@@ -149,53 +148,41 @@ public class GetSkillsOfPlayersByInvitingThemToNTWorker extends SwingWorker<Bool
 								outputArea.append("SKIP because owner is RETIRED" + System.getProperty("line.separator"));
 								continue;
 							}
-															
-							Team teamPage = playerPage.clickOnOwnerLink();
-							if(teamPage.isHuman()) {
-								owner = teamPage.getTeamID();
-							} else {
-								i++;
-								outputArea.append("SKIP because owner is BOT" + System.getProperty("line.separator"));
-								continue;
-							}
-							driver.navigate().back();
-							
-							playerPage = PageFactory.initElements(driver, Player.class);
 						}
 						
 						// if skills are not visible and there is recruit button => recruit player to NT
 						boolean playerInvitedToNT = false;
 						
-						if(!playerPage.arePlayerSkillsVisible() 
-								// && playerPage.isRecruitOrDismissButtonDisplayed()
-								&& playerPage.isRecruitToNTButtonDisplayed()
-								&& inviteToNT) {
-							playerPage.clickOnRecruitToNTButton();
-							playerPage.clickOnRecruitToNTButtonConfirm();
-							playerInvitedToNT = true;
-							outputArea.append(" - Invited to NT");
+						if(!playerPage.arePlayerSkillsVisible() && inviteToNT) {
+							if(playerPage.isRecruitToNTButtonDisplayed()) {
+								playerPage.clickOnRecruitToNTButton();
+								playerPage.clickOnRecruitToNTButtonConfirm();
+								playerInvitedToNT = true;
+								outputArea.append(" - Invited to NT");
+							} else {
+								outputArea.append(" - No 'Recruit' button");
+							}
 						}
 						
 						// get player skills
 						com.buzzerbeater.model.Player p = playerPage.getPlayerInfo();
-						p.setOwner(owner);
 						
-						outputArea.append(" - Skills collected");
+						outputArea.append(" - Info collected");
 						
 						if(playerInvitedToNT) { // remove from NT squad
-							playerPage = playerPage.dismissFromNT();
+							playerPage.dismissFromNT();
 							playerInvitedToNT = false;
-							outputArea.append(" - Dismissed - ");
+							outputArea.append(" - Dismissed");
 						}
 						
-						out.println(p.getCsvPlayerInfo());
+						out.println(p.getCsvPlayerInfo(Page.baseUrl));
 						out.flush();
 						i++;
 						
-						outputArea.append("OK" + okMessageSuffix + System.getProperty("line.separator"));
+						outputArea.append(" - OK" + okMessageSuffix + System.getProperty("line.separator"));
 							
 					} catch(Exception e) {
-						outputArea.append("FAIL - General Error '" + e.getMessage() + "'. Restarting..." + System.getProperty("line.separator"));
+						outputArea.append(" - FAIL - General Error '" + e.getMessage() + "'. Restarting..." + System.getProperty("line.separator"));
 						e.printStackTrace();
 						try {
 							driver.quit();
@@ -211,6 +198,8 @@ public class GetSkillsOfPlayersByInvitingThemToNTWorker extends SwingWorker<Bool
 					driver.close();
 				} catch(Exception e1){}
 				driver = null;
+			} finally {
+				driver.quit();
 			}
 		}
 		

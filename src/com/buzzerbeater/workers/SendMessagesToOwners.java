@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
@@ -80,7 +79,7 @@ public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 			}
 			
 			// authenticate team
-			String teamIdInThePage = overviewPage.getTeamID();
+			String teamIdInThePage = overviewPage.getTeamIDFromMenu();
 			if(!this.teamID.equals(teamIdInThePage)) {
 				outputArea.setForeground(Color.RED);
 				outputArea.setText("ERROR: Your team ID ("+this.teamID+") does not match the one in the Overview page ("+teamIdInThePage+")");
@@ -114,7 +113,7 @@ public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 						overviewPage = loginPage.login(username, password, Overview.class);
 						driver.get(playerURL);
 						playerPage = PageFactory.initElements(driver, Player.class);
-						if(!this.teamID.equals(playerPage.getTeamID())) {
+						if(!this.teamID.equals(playerPage.getTeamIDFromMenu())) {
 							outputArea.setForeground(Color.RED);
 							outputArea.setText("ERROR: your team is not licenesed to use this tool!");
 							return false;

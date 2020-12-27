@@ -1,6 +1,6 @@
 package com.buzzerbeater.workers;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +18,7 @@ import com.buzzerbeater.utils.Messages;
 
 public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 	
-	List<String> playersURLs;
+	List<String> playerIDs;
 	HashMap<String, String> messagesAndSubjects;
 	JTextArea outputArea;
 	boolean visibleBrowser=true;
@@ -32,11 +32,11 @@ public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 	private BrowserType browserType;
 	
 	public SendMessagesToOwners(String username, String password, String teamID,
-			List<String> players, HashMap<String, String> messagesMap,
+			List<String> playerIDs, HashMap<String, String> messagesMap,
 			JTextArea output, boolean skipTLPlayers, 
 			boolean visibleBrowser, BrowserType browserType) {
 		
-		this.playersURLs=players;
+		this.playerIDs =playerIDs;
 		this.messagesAndSubjects = messagesMap;
 		this.outputArea = output;
 		this.username=username;
@@ -55,15 +55,25 @@ public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 	@Override
 	protected Boolean doInBackground() throws Exception {
 		// send messages
-		if(this.playersURLs.size()==0) {
+		if(this.playerIDs.size()==0) {
 			this.outputArea.append("Players list is empty!" + System.getProperty("line.separator"));
 			return false;
 		}
-		
+
+		for (String pID : playerIDs) {
+			if(!pID.matches("[0-9]+")) {
+				outputArea.setForeground(Color.RED);
+				outputArea.setText("ERROR: invalid playerID found in the list: " + pID + System.getProperty("line.separator"));
+				return false;
+			}
+		}
+
+		outputArea.setText("");
+
 		WebDriver driver = DriverInitializationHelper
 				.initializeDriver(visibleBrowser, browserType);
 		
-		this.outputArea.setText("Trying to send messages for " + playersURLs.size() 
+		this.outputArea.setText("Trying to send messages for " + playerIDs.size()
 					+ " player(s)" + System.getProperty("line.separator"));
 		
 		try {
@@ -96,33 +106,37 @@ public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 						+ "Messages will be sent in English" + System.getProperty("line.separator"));
 			}
 			
-			for(int i=0; i<playersURLs.size(); i++) {
+			for(int i = 0; i< playerIDs.size(); i++) {
 				
-				setProgress(100 * (i) / playersURLs.size());
+				setProgress(100 * (i) / playerIDs.size());
 				
 				try {
-					String playerURL = playersURLs.get(i);
+
+					// Check if the ID is the number
+					String playerID = playerIDs.get(i);
+					// TODO: use Player page to get the proepr URL based on the ID
+					String playerURL = Page.baseUrl + "/player/" + playerID + "/overview.aspx";
 					String okMessageSuffix = "";
 					
 					String messageTemplate, subjectTemplate;
-					outputArea.append((i+1) + "/" + playersURLs.size() + 
-							": Sending message for '" + playerURL + "' ... ");
+					outputArea.append((i+1) + "/" + playerIDs.size() +
+							": Sending message for player ID='" + playerID + "' ... ");
 					driver.get(playerURL);
 					Player playerPage = PageFactory.initElements(driver, Player.class);
 					if(!playerPage.isLoggedIn(1)) {
-						overviewPage = loginPage.login(username, password, Overview.class);
+						loginPage.login(username, password, Overview.class);
 						driver.get(playerURL);
 						playerPage = PageFactory.initElements(driver, Player.class);
 						if(!this.teamID.equals(playerPage.getTeamIDFromMenu())) {
 							outputArea.setForeground(Color.RED);
-							outputArea.setText("ERROR: your team is not licenesed to use this tool!");
+							outputArea.setText("ERROR: teamID provided in User Info tab is not the same as the one in the page!");
 							return false;
 						}
 						
 					}
 					
 					if(playerPage.isOwnerRetired()) {
-						this.playersFromRetiredAndBot.add(playerURL);
+						this.playersFromRetiredAndBot.add(playerID);
 						outputArea.append("FAIL - Owner retired" + System.getProperty("line.separator"));
 						continue;
 					}
@@ -133,11 +147,10 @@ public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 					}
 					
 					String playerName = playerPage.getPlayerName();
-					String playerID = playerPage.getPlayerID();
 					Team teamPage = playerPage.clickOnOwnerLink();
 					
 					if(!teamPage.isHuman()) {
-						this.playersFromRetiredAndBot.add(playerURL);
+						this.playersFromRetiredAndBot.add(playerID);
 						outputArea.append("FAIL - Owner is BOT" + System.getProperty("line.separator"));
 						continue;
 					}
@@ -172,7 +185,7 @@ public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 					boolean msgSent = sentMessagePage.isDisplayed();
 					
 					if(msgSent) {
-						this.playersWithMessagesSent.add(playerURL);
+						this.playersWithMessagesSent.add(playerID);
 						outputArea.append("OK" + okMessageSuffix + System.getProperty("line.separator"));
 					} else {
 						outputArea.append("FAIL" + System.getProperty("line.separator"));
@@ -182,14 +195,16 @@ public class SendMessagesToOwners extends SwingWorker<Boolean, Integer> {
 					outputArea.append("FAIL - " + e.getMessage() + System.getProperty("line.separator"));
 				}
 				
-				setProgress(100 * (i+1) / playersURLs.size());
+				setProgress(100 * (i+1) / playerIDs.size());
 			}
+		} catch(Exception e) {
+			System.err.println("FAIL - " + e.getMessage());
 		} finally {
 			driver.quit();
 		}
 		
 		// update the lists
-		for(String s : this.playersURLs) {
+		for(String s : this.playerIDs) {
 			if(!this.playersWithMessagesSent.contains(s))
 				this.playersWithMessagesNotSent.add(s);
 		}

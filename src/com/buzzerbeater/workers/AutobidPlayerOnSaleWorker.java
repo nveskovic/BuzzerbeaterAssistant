@@ -142,11 +142,11 @@ public class AutobidPlayerOnSaleWorker extends SwingWorker<Boolean, String> {
 						} else {
 							// place a bid
 							playerPage = playerPage.clickOnBidButton();
-							if(playerPage.isErrorMessageDisplayed()) { 
-								// cant proceed due to error message
-								publish("ERROR: Exiting now. Reason: " + playerPage.getErrorMessageText());
-								break;
-							}
+//							if(playerPage.isErrorMessageDisplayed()) {
+//								// cant proceed due to error message
+//								publish("ERROR: Exiting now. Reason: " + playerPage.getErrorMessageText());
+//								break;
+//							}
 							
 							// check if your bid is active.
 							// if yes -> sleep

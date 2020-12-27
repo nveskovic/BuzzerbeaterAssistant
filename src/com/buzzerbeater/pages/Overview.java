@@ -14,13 +14,13 @@ public class Overview extends Page{
 	}
 
 	public Player getPlayerPageByID(String playerID) {
-		driver.get("http://www.buzzerbeater.com/player/" + playerID + "/overview.aspx");
+		driver.get(Page.baseUrl + "/player/" + playerID + "/overview.aspx");
 		return PageFactory.initElements(driver, Player.class);
 	}
 
 	public Staff getStaffPageByID(String staffID) {
 		// http://www.buzzerbeater.com/manage/staffBox.aspx?staffID=4201525
-		driver.get(" http://www.buzzerbeater.com/manage/staffBox.aspx?staffID=" + staffID);
+		driver.get(Page.baseUrl + "/manage/staffBox.aspx?staffID=" + staffID);
 		return PageFactory.initElements(driver, Staff.class);
 	}
 

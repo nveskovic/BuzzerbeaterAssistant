@@ -22,8 +22,6 @@ import com.buzzerbeater.utils.BrowserType;
 import com.buzzerbeater.utils.Files;
 import com.buzzerbeater.utils.Messages;
 import com.buzzerbeater.utils.SwingUIHelper;
-import com.buzzerbeater.workers.AutobidPlayerOnSaleWorker;
-import com.buzzerbeater.workers.AutobidStaffOnSaleWorker;
 import com.buzzerbeater.workers.GetPlayersFromDraftWorker;
 import com.buzzerbeater.workers.GetSkillsOfPlayersByInvitingThemToNTWorker;
 import com.buzzerbeater.workers.SendMessagesToOwners;
@@ -118,18 +116,6 @@ public final class BuzzerBeaterAssistant {
 		// ################################################################
 		SendMessagesPanel sendMessagesPanel = new SendMessagesPanel();
 		tabbedPane.addTab(sendMessagesPanel.getName(), sendMessagesPanel);
-
-
-		// ################################################################
-		// #
-		// # Trade agent tab
-		// #
-		// ################################################################
-
-		if(TradingAgentPanel.allowedIDs.contains(BuzzerBeaterAssistant.TEAMID)) {
-			TradingAgentPanel tradingAgentPanel = new TradingAgentPanel();
-			tabbedPane.addTab(tradingAgentPanel.getName(), tradingAgentPanel);
-		}
 
 		// ################################################################
 		// #

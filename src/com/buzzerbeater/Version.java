@@ -6,6 +6,6 @@ public class Version {
 	}
 	
 	private static final String MAJOR_VERSION = "3";
-	private static final String MINOR_VERSION = "3";
-	private static final String BUILD_VERSION = "2";
+	private static final String MINOR_VERSION = "4";
+	private static final String BUILD_VERSION = "1";
 }

@@ -1,19 +1,8 @@
 package com.buzzerbeater.ui;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Desktop;
+import java.awt.*;
 
-import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JPanel;
-import java.awt.GridLayout;
-import javax.swing.SwingConstants;
-import javax.swing.SwingWorker;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.buzzerbeater.Version;
@@ -26,18 +15,6 @@ import com.buzzerbeater.workers.GetPlayersFromDraftWorker;
 import com.buzzerbeater.workers.GetSkillsOfPlayersByInvitingThemToNTWorker;
 import com.buzzerbeater.workers.SendMessagesToOwners;
 
-import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.Toolkit;
-import java.awt.Insets;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.JCheckBox;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,10 +26,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.net.URI;
-
-import javax.swing.JProgressBar;
-import javax.swing.JSplitPane;
-import javax.swing.JSeparator;
 
 public final class BuzzerBeaterAssistant {
 
@@ -81,7 +54,9 @@ public final class BuzzerBeaterAssistant {
 	 */
 	private void initialize() {
 		frmBbassistant = new JFrame();
-		frmBbassistant.setIconImage(Toolkit.getDefaultToolkit().getImage(BuzzerBeaterAssistant.class.getResource("/images/icon.jpg")));
+		// frmBbassistant.setIconImage(Toolkit.getDefaultToolkit().getImage(BuzzerBeaterAssistant.class.getResource("./images/icon.jpg")));
+		ImageIcon icon = new ImageIcon(System.getProperty("user.dir") + "images/icon.jpg");
+		frmBbassistant.setIconImage(icon.getImage());
 		frmBbassistant.setResizable(false);
 		frmBbassistant.setName("mainFrame");
 		frmBbassistant.getContentPane().setFont(new Font("Courier New", Font.PLAIN, 16));

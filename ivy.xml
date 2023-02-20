@@ -14,14 +14,14 @@
         <!-- Presentation purposes -->
         <!-- Presentation purposes -->
 
-             <!-- Browser binaries -->
-        <dependency org="chromedriver" name="chromedriver_win" rev="2.37">
+        <!-- Browser binaries -->
+        <dependency org="chromedriver" name="chromedriver_win" rev="110.0.5481.77">
             <artifact name="chromedriver_win" ext="zip" type="zip"
-                    url="https://chromedriver.storage.googleapis.com/2.37/chromedriver_win32.zip"/>
+                    url="https://chromedriver.storage.googleapis.com/110.0.5481.77/chromedriver_win32.zip"/>
         </dependency>
-        <dependency org="chromedriver" name="chromedriver_linux" rev="2.37">
-            <artifact name="chromedriver_linux" ext="zip" type="zip"
-                    url="https://chromedriver.storage.googleapis.com/2.37/chromedriver_linux64.zip"/>
+        <dependency org="chromedriver" name="chromedriver_macos" rev="110.0.5481.77">
+            <artifact name="chromedriver_macos" ext="zip" type="zip"
+                    url="https://chromedriver.storage.googleapis.com/110.0.5481.77/chromedriver_mac64.zip"/>
         </dependency>
         <dependency org="geckodriver" name="geckodriver_win" rev="0.20.0">
             <artifact name="geckodriver_win" ext="zip" type="zip"

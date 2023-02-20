@@ -15,8 +15,8 @@ public class Messages {
 	public static String playerNamePlaceholder = "_PLAYER_NAME_";
 	public static String playerIDPlaceholder = "_PLAYER_ID_";
 
-	public static String subjectTemplateDomestic = "NT Scout - igrac " + playerNamePlaceholder + " (" + playerIDPlaceholder + ")";
-	public static String subjectTemplateEN = "NT Scout - player " + playerNamePlaceholder + " (" + playerIDPlaceholder + ")";
+	public static String subjectTemplateDomestic = "BBAssistant - igrac " + playerNamePlaceholder + " (" + playerIDPlaceholder + ")";
+	public static String subjectTemplateEN = "BBAssistant - player " + playerNamePlaceholder + " (" + playerIDPlaceholder + ")";
 
 
 	public static String greetingMessageTemplateDomestic = "Cao,\n\nja sam jedan od skauta U21 reprezentacije Srbije i od selektora sam dobio zadatak da sa tobom radim na "

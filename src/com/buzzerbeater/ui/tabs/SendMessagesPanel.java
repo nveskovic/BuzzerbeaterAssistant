@@ -125,8 +125,8 @@ public class SendMessagesPanel  extends JPanel {
         });
         comboBoxSelectMessage.setModel(new DefaultComboBoxModel<String>(
                 new String[] {"Custom message (type your own)",
-                        "Default NT Scout greeting message",
-                        "Default NT Scout ask for skills update"}));
+                        "Default BBAssistant greeting message",
+                        "Default BBAssistant ask for skills update"}));
         comboBoxSelectMessage.setEditable(true);
         comboBoxSelectMessage.setBounds(685, 4, 287, 22);
         comboBoxSelectMessage.setSelectedIndex(2);
@@ -139,6 +139,7 @@ public class SendMessagesPanel  extends JPanel {
 
         txtPlayersList = new JTextArea();
         scrollPanePlayers.setViewportView(txtPlayersList);
+        txtPlayersList.setToolTipText("Enter player IDs only (not the full URLs). One ID per line.");
         txtPlayersList.setMargin(new Insets(2, 5, 2, 2));
 
         scrollPaneOutput = new JScrollPane();
@@ -270,7 +271,7 @@ public class SendMessagesPanel  extends JPanel {
         });
 
 
-        btnLoadPlayersFrom = new JButton("Load players from file");
+        btnLoadPlayersFrom = new JButton("Load player IDs from a file");
         btnLoadPlayersFrom.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent arg0) {
@@ -287,12 +288,12 @@ public class SendMessagesPanel  extends JPanel {
                 SwingUIHelper.loadLinesFromFileToTextArea(selFile, txtPlayersList, txtLogOutput);
             }
         });
-        btnLoadPlayersFrom.setBounds(12, 3, 175, 25);
+        btnLoadPlayersFrom.setBounds(12, 3, 185, 25);
         add(btnLoadPlayersFrom);
 
-        JLabel lblOrEnterPlayers = new JLabel("or enter players manually");
+        JLabel lblOrEnterPlayers = new JLabel("or enter IDs manually");
         lblOrEnterPlayers.setLabelFor(btnLoadPlayersFrom);
-        lblOrEnterPlayers.setBounds(195, 7, 169, 16);
+        lblOrEnterPlayers.setBounds(205, 7, 169, 16);
         add(lblOrEnterPlayers);
 
         JLabel lblSubject = new JLabel("Subject");

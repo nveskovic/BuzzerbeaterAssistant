@@ -1,4 +1,5 @@
-<project name="Buzzerbeater Assistant" default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="Buzzerbeater Assistant" default="build" xmlns:ivy="antlib:org.apache.ivy.ant"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="antlib:org.apache.ivy.ant ">
 
     <!--
     ================
@@ -9,7 +10,7 @@
     <property name="build.dir" location="build"/>
 	<property name="lib.dir" location="lib"/>
     <property name="classes.dir" location="${build.dir}/classes"/>
-    <property name="ivy.reports.dir"  location="${build.dir}/ivy-reports"/>
+    <property name="ivy.reports.dir" location="${build.dir}/ivy-reports"/>
 	<property name="resources.dir" location="resources"/>
 	<property name="config.dir" location="${resources.dir}/config"/>
 	<property name="data.dir" location="data"/>
@@ -21,22 +22,22 @@
     ===========
     -->
     <target name="init">
-    	
-    	<path id="lib.classpath">
-    		<fileset  dir="${lib.dir}" includes="**/*.jar"/>
-    	</path>
-    	<path id="project.classpath">
-    		<path refid="lib.classpath"/>
-    		<fileset dir="${classes.dir}" includes="**/*.class"/>
-    		<dirset dir="${classes.dir}"/>
-    		<dirset dir="${resources.dir}"/>
-    	</path>
-    	
-    	<ivy:settings file="${config.dir}/ivysettings.xml"/>
+
+		<path id="lib.classpath">
+			<fileset dir="${lib.dir}" includes="**/*.jar"/>
+		</path>
+		<path id="project.classpath">
+			<path refid="lib.classpath"/>
+			<fileset dir="${classes.dir}" includes="**/*.class"/>
+			<dirset dir="${classes.dir}"/>
+			<dirset dir="${resources.dir}"/>
+		</path>
+
+		<ivy:settings file="${config.dir}/ivysettings.xml"/>
         <ivy:resolve/>
-    	<mkdir dir="${lib.dir}"/>
+		<mkdir dir="${lib.dir}"/>
 		<mkdir dir="${browser.binaries.folder}"/>
-    	<ivy:retrieve pattern="${lib.dir}/[artifact].[ext]"/>
+		<ivy:retrieve pattern="${lib.dir}/[artifact].[ext]"/>
 
         <ivy:report todir='${ivy.reports.dir}' graph='false' xml='false'/>
 
@@ -44,18 +45,18 @@
 
 
 		<!-- extract browser binaries from tar archive -->
-    	<unzip dest="${browser.binaries.folder}">
+		<unzip dest="${browser.binaries.folder}">
 			<fileset dir="${lib.dir}">
-				<include name="chromedriver*linux*.zip" />
+				<include name="chromedriver*mac*.zip"/>
 			</fileset>
 			<patternset>
 				<include name="chromedriver"/>
 			</patternset>
 			<mapper type="flatten"/>
 		</unzip>
-    	<unzip dest="${browser.binaries.folder}">
+		<unzip dest="${browser.binaries.folder}">
 			<fileset dir="${lib.dir}">
-				<include name="chromedriver*win*.zip" />
+				<include name="chromedriver*win*.zip"/>
 			</fileset>
 			<patternset>
 				<include name="chromedriver.exe"/>
@@ -64,27 +65,27 @@
 		</unzip>
 		<unzip dest="${browser.binaries.folder}">
 			<fileset dir="${lib.dir}">
-				<include name="geckodriver*win*.zip" />
+				<include name="geckodriver*win*.zip"/>
 			</fileset>
 			<patternset>
 				<include name="geckodriver.exe"/>
 			</patternset>
 			<mapper type="flatten"/>
 		</unzip>
-    	<gunzip dest="${browser.binaries.folder}/geckodriver">
-    		<fileset dir="${lib.dir}">
-				<include name="geckodriver*linux*.gz" />
+		<gunzip dest="${browser.binaries.folder}/geckodriver">
+			<fileset dir="${lib.dir}">
+				<include name="geckodriver*linux*.gz"/>
 			</fileset>
-    	</gunzip >
+		</gunzip>
 
 		<chmod dir="${browser.binaries.folder}" perm="ugo+x" includes="*"/>
 
-    	<!-- delete dowloaded (not needed) archives -->
-    	<delete>
-    		<fileset dir="${lib.dir}" includes ="*.zip" />
-			<fileset dir="${lib.dir}" includes ="*.gz" />
-			<fileset dir="${lib.dir}" includes ="*.tar.bz2" />
-    	</delete>
+		<!-- delete dowloaded (not needed) archives -->
+		<delete>
+			<fileset dir="${lib.dir}" includes="*.zip"/>
+			<fileset dir="${lib.dir}" includes="*.gz"/>
+			<fileset dir="${lib.dir}" includes="*.tar.bz2"/>
+		</delete>
     </target>
 
     <!--
@@ -94,13 +95,13 @@
     -->
     <target name="compile" depends="init">
         <mkdir dir="${classes.dir}"/>
-    	<javac 
-        	srcdir="${src.dir}" 
-        	destdir="${classes.dir}" 
-        	includeantruntime="false" 
-        	debug="true" 
-    		classpathref="project.classpath"
-        	>
+		<javac
+				srcdir="${src.dir}"
+				destdir="${classes.dir}"
+				includeantruntime="false"
+				debug="true"
+				classpathref="project.classpath"
+		>
         </javac>
     </target>
 
@@ -118,9 +119,9 @@
     -->
     <target name="clean">
         <delete dir="${build.dir}"/>
-    	<delete dir="${lib.dir}"/>
-    	<delete dir="${classes.dir}"/>
-    	<delete dir="${browser.binaries.folder}"/>
+		<delete dir="${lib.dir}"/>
+		<delete dir="${classes.dir}"/>
+		<delete dir="${browser.binaries.folder}"/>
     </target>
 
     <target name="clean-all" depends="clean">
